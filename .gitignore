@@ -1,0 +1,7 @@
+data/*
+*png
+*svg
+*gds
+.R*
+1012.gds
+out/*
