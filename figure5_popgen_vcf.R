@@ -25,6 +25,11 @@ bb = prov[prov$CONSEQUENCE == "nonsynonymous",]
 plot(y=bb$prov , x=bb$PROTEINLOC)
 
 
+
+gl$ chrXIII:25025_A/G
+
+
+coding$X[which(coding$X$GENEID == "YML123C"),] %>% filter(REFAA == "L") %>% filter(VARAA=="P")
 #bb$
 
 sum(duplicated(coding$X))

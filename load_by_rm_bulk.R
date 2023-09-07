@@ -77,11 +77,26 @@ cir =  unlist(as.numeric(lapply(str_split(bulk_hotspots$CI.r,"_"), function(x){s
 bulk_hotspots$CI.l = cil
 bulk_hotspots$CI.r = cir
 bulk_hotspots$peak.marker = bulk_hotspots$pmarker
+bulk_hotspots$peak.marker = str_replace_all(bulk_hotspots$peak.marker,":","_")
 
 #background = (names(gene_expr_1000))
+
 #lod_df_beta, cell_cycle_beta_df2,segdata,out_name
+
+hotspot_peaks = bulk_hotspots
+combined_peaks = cPf
+lod_df_beta = cross_data$A$trans$cell_cycle_lods
+cell_cycle_beta_df2 = cross_data$A$trans$cell_cycle_beta_all
+segdata=segdata
+background = names(gene_expr_1000)
+out_name = "A_old"
+
+
 hotspots_bulk = hotspot_enrichment_and_function(cross="A",hotspot_peaks = bulk_hotspots,combined_peaks = cPf,lod_df_beta = cross_data$A$trans$cell_cycle_lods,
                                                 cell_cycle_beta_df2=cross_data$A$trans$cell_cycle_beta_all,segdata = segdata, background = names(gene_expr_1000),fdr_fx = NULL,out_name = "A_old")
+
+
+
 
 hotspot_bins_final = hotspots_bulk$hotspot_list %>% group_by(bin,hotspot_pos, chrom) %>% summarise(n=n())
 #hotspot_bins_final = enrich_list$hotspot_list %>% group_by(bin,hotspot_pos,chrom) %>% summarise(n=n())
@@ -95,9 +110,10 @@ hotspot_bins_final$end = end
 hotspot_bins_final_gr = makeGRangesFromDataFrame(hotspot_bins_final)
 hotspot_bins_final_gr$n = hotspot_bins_final$n
 hotspot_bins_final_gr$bin = hotspot_bins_final$bin
+hotspot_bins_final_gr$hotspot_pos = hotspot_bins_final$hotspot_pos
 
 
-bin.table
+#bin.table
 
 cross_data$A_bulk$cis = bulk_local_eQTL
 cross_data$A_bulk$trans = list()
@@ -107,7 +123,7 @@ cross_data$A_bulk$trans[["hotspot_peaks"]]= bulk_hotspots %>% filter(in.hotspot)
 cross_data$A_bulk$trans[["segdata"]] = segdata
 cross_data$A_bulk$trans[["hotspot_list"]] = hotspots_bulk$hotspot_list
 cross_data$A_bulk$trans[["hotspot_enrichments_and_overlaps"]] = hotspots_bulk$annotation_list
-cross_data$A_bulk$trans[["hotsot_table"]] = bin.table
+cross_data$A_bulk$trans[["hotspot_table"]] = bin.table
 cross_data$A_bulk$trans[["hotspot_table"]]$chrom_f = convert_chrom_to_simple_factor(cross_data$A_bulk$trans[["hotspot_table"]]$chr)
 
 

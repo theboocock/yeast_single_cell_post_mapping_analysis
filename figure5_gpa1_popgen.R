@@ -81,11 +81,14 @@ p_m = p_m %>% filter(ID != "469I 82R")
 m_resid = residuals(lm((p_m$doubling) ~ p_m$plate))
 p_m$resid = m_resid + 0.4519579
 
+mycomparsions = c("WT","W82R")
 p_m$strain_new = factor(p_m$ID, levels=c("WT","82R","469I"))
 
+mycomparsions = list(c("WT","82R"),c("82R","469I"),c("WT","469I"))
 
 pa = p_m %>% mutate(plate_l = grepl("Les",plate)) %>% 
-  ggplot(aes(y=resid,x=strain_new)) + geom_boxplot() + geom_jitter(width=0.2) + theme_bw() + ylab("Doublings per hour") + xlab("Genotypes")  + theme(text=element_text(size=18))
+  ggplot(aes(y=resid,x=strain_new)) + geom_boxplot() + geom_jitter(width=0.2) + theme_bw() + ylab("Doublings per hour") + xlab("Strain")  + theme(text=element_text(size=18)) +
+  stat_compare_means(comparisons = mycomparsions,method="t.test",size=8) 
 m1 = (lm((p_m$doubling) ~ p_m$ID + p_m$plate))
 
 library(emmeans)
@@ -136,12 +139,12 @@ for(j in unique(mating_df$expr)){
 
 aa = aa %>% mutate(strain_new = case_when(
   strain =="416" ~ "WT",
-  strain == "420" ~ "W82R",
-  strain == "424" ~ "S469I"))
-aa$strain_new = factor(aa$strain_new, levels=c("WT","W82R","S469I"))
+  strain == "420" ~ "82R",
+  strain == "424" ~ "469I"))
+aa$strain_new = factor(aa$strain_new, levels=c("WT","82R","469I"))
 pb = aa%>% ggplot(aes(y=norm,x=strain_new)) + geom_boxplot(outlier.shape  = NA) +  geom_jitter(width=.2,size=3) +
   ylab("Mating efficiency") + xlab("Strain") + scale_color_manual(values=c("blue","red")) + theme_bw()  +
-  theme(text=element_text(size=25)) #+ ylim(c(99,112))
+  theme(text=element_text(size=18))  +stat_compare_means(comparisons = mycomparsions,method="t.test",size=8)#+ ylim(c(99,112))
 
 
 aa_red = aa %>% filter(color=="red")
@@ -151,9 +154,11 @@ aaaa = emmeans(mm,spec=~strain_new)
 pairs(aaaa)
 
 plot_side_left = pa / pb
-
+plot_side_left
+ggsave("figures/figure_6_gpa.svg",width=8,height=12)
+library(SNPRelate)
 genofile = snpgdsOpen("1012.gds")
-snpgdsClose(genofile)
+#snpgdsClose(genofile)
 dissim = snpgdsDiss(genofile,autosome.only = F)
 rownames(dissim$diss)= dissim$sample.id
 colnames(dissim$diss) = dissim$sample.id
@@ -172,6 +177,9 @@ chrom =  read.gdsn(index.gdsn(genofile,"snp.chromosome"))
 allele =  read.gdsn(index.gdsn(genofile,"snp.allele"))
 
 idx = which(chrom == "VIII" & pos == "114674")
+#idx2 = which(chrom == "XIII" & pos == "25025")
+
+
 gt =  read.gdsn(index.gdsn(genofile,"genotype"))
 w82r_gt = (2-(gt[,idx]))
 gt[gt==3] = NA
@@ -187,7 +195,7 @@ het_sites = rowSums(gt == 1,na.rm=T)
 het_sites_divisor = rowSums(!is.na(gt))*2
 het_sites_prop = het_sites/het_sites_divisor
 
-het_df = data.frame(het_sites_prop=het_sites_prop,gpa=tmp_gt)
+het_df = data.frame(het_sites_prop=het_sites_prop,gpa=w82r_gt)
 het_df$sample = dissim$sample.id
 het_df = het_df %>% inner_join(joseph_annotation,by=c("sample"="standardized_name2"))
 
@@ -214,8 +222,8 @@ library(ggtree)
 library(treeio)
 aa_2 = as.treedata(mid)
 gfive = groupOTU(aa_2@phylo, list(het_df$sample[het_df$gpa == 2],het_df$sample[het_df$gpa == 1],het_df$sample[het_df$gpa == 0]))
-p3 = ggtree(gfive, aes(color=group), layout="fan")  + scale_color_manual(values=c("#377eb8","#e41a1c","grey85"))
-
+p3 = ggtree(gfive, aes(color=group), layout="fan",open.angle = 180 )  + scale_color_manual(values=c("#377eb8","#e41a1c","grey85"))
+ggsave("figures/tree.svg")
 
 clade_list = list()
 clade_list_new_names = list()
@@ -237,7 +245,7 @@ gfour = groupOTU(aa_2@phylo, clade_list)
 #clade_summary %>% 
 p4 = clade_summary %>% ggplot(aes(x=maf,y=reorder(Clades,maf))) + geom_bar(stat="identity")  + theme_classic() + theme(text=element_text(size=18)) + xlab("82R Allele-frequency") + ylab("Clades")
 
-ggtree(gfour,aes(color=group),layout="fan",an)
+ggtree(gfour,aes(color=group),layout="fan")
 
 
 ((pa / pb ) | (p3/p4)) + plot_annotation(tag_levels = 'A')

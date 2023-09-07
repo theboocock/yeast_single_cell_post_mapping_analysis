@@ -14,8 +14,8 @@ dim(cross_data$`3004`$trans$hotspot_peaks)
 length(table(cross_data$B$trans$hotspot_list$bin))
 length(table(cross_data$`3004`$trans$hotspot_list$bin))
 
-p3004_bar  = make_hotspot_hist(cross_data$`3004`$trans$hotspot_table,ylim=c(0,100))
-pb_bar = make_hotspot_hist(cross_data$B$trans$hotspot_table,ylim=NULL)
+p3004_bar  = make_hotspot_hist(cross_data$`3004`$trans$hotspot_table,ylim=c(0,100))# + theme(strip.text.x = element_blank()) + theme(pane)
+pb_bar = make_hotspot_hist(cross_data$B$trans$hotspot_table,ylim=NULL)# + theme(strip.text.x = element_blank())
 #p3004_bar= ggplot(cross_data$`3004`$trans$hotspot_table,aes(pos,count)) + #, col=LOD))+scale_colour_viridis_b()+ #LOD))) +#pha=-log10(LOD)/6))+geom_point()+
 #  geom_bar(stat="identity", width=50000)+geom_hline(yintercept = cross_data$`3004`$trans$hotspot_threshold,color="red")  + 
 #  xlab('Variant position (Mb)')+ylab("Distal eQTLs")+ scale_alpha(guide = 'none') + 
@@ -42,16 +42,15 @@ library(patchwork)
 
 #plot1 /plot2
 
-pb = make_hotspot_map(cross_data$B$trans$combined_peaks,title = "YPS163 x YJM144")
+pb = make_hotspot_map(cross_data$B$trans$combined_peaks,title = "YPS163 x YJM145")
 p3004 = make_hotspot_map(cross_data$`3004`$trans$combined_peaks,title = "YJM981 x CBS2888")
 
+plot_grid(p3004,pb,p3004_bar,pb_bar,nrow=2,labels = c("A","B","C","D"),label_size = 18,rel_heights = c(2,.6),align="hv",axis="lrtb")
 #(p3004|pb)/(p3004_bar|pb_bar) + plot_annotation(tag_levels = "A")
-
-
-(p3004 / p3004_bar) | (pb / pb_bar) + plot_annotation(tag_levels = "A")
+#(p3004 / p3004_bar) | (pb / pb_bar) + plot_annotation(tag_levels = "A")
 
 #cowplot::plot_grid(pb,p3004,pb_bar,p3004_bar,nrow=2,labels=c("A","B","C","D"),label_size = 18,align="hv")
-ggsave("figures/figure3.svg")
+ggsave("figures/figure3.svg",width=26,height=16)
 #p4 = ggplot(cross_data$B$trans$hotspot_table,aes(pos,count)) + #, col=LOD))+scale_colour_viridis_b()+ #LOD))) +#pha=-log10(LOD)/6))+geom_point()+
 #  geom_bar(stat="identity", width=50000)+ geom_hline(yintercept = cross_data$B$trans$hotspot_threshold,color="red")  + 
 #  xlab('Variant position (Mb)')+ylab('Distal eQTLs')+ scale_alpha(guide = 'none') + 

@@ -1,3 +1,5 @@
+*txt
+*xlsx
 data/*
 *png
 *svg
@@ -5,3 +7,4 @@ data/*
 .R*
 1012.gds
 out/*
+.Rproj.user

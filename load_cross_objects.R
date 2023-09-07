@@ -46,6 +46,10 @@ source("vars.R")
 #  return(cross_tmp)
 #}
 
+#A (BY-, RM+)
+#3004 (CBS-, YJM981+)
+#B (YJM145-, YPS163+
+
 for(cross in unique(summary_table$cross)){
   print(cross)
   if(cross == "Ap"){
@@ -53,7 +57,7 @@ for(cross in unique(summary_table$cross)){
   }
   if(cross != "Ap"){
     cross_data[[cross]][["cis"]] = load_cis_one_pot(cross)
-    #cross_data[[cross]][["trans"]]= load_trans_one_pot(cross)
+    cross_data[[cross]][["trans"]]= load_trans_one_pot(cross)
     
     
     # Get HAPLOIDS
@@ -85,18 +89,22 @@ for(cross in c("A","B","3004")){
   cis = cross_data[[cross]]$cis$cis_test_with_disp_expr %>% mutate(cross = !!cross)
   trans_peaks = cross_data[[cross]]$trans$hotspot_peaks_new %>% mutate(cross = !!cross)
   
+  cis_ase_only = cross_data[[cross]]$cis$ASE$ase_cis %>% mutate(cross = !!cross)
   
   cis_ase = cross_data[[cross]]$cis$ASE$ase_noise %>% mutate(cross = !!cross)
+  
   
   cis_noise_m  = inner_join(cis,cis_ase,by=c("transcript"="gene","cross")) 
   if (cross %in% c("3004","B")){
     cis_noise_m$Beta = -cis_noise_m$Beta
+    #cis_ase_only$estimate = -cis_ase_only$estimate
   }
   #combined_objects[["cis_ase"]]
-  combined_objects[["cis_eqtl_ase"]] = rbind(combined_objects[["cis_eqtl_ase"]],cis_noise_m)
+  combined_objects[["cis_eqtl_ase_noise"]] = rbind(combined_objects[["cis_eqtl_ase_noise"]],cis_noise_m)
   
   combined_objects[["cis_table"]] = rbind(combined_objects[["cis_table"]],cis)
   combined_objects[["hotspot_peaks"]] = rbind(combined_objects[["hotspot_peaks"]],trans_peaks)
+  combined_objects[["cis_eqtl_ase"]] = rbind(combined_objects[["cis_eqtl_ase"]],cis_ase_only)
   
   
   n1 = cross_data[[cross]]$cis$ASE$ase_noise %>% mutate(cross = !!cross)
@@ -116,20 +124,23 @@ for(cross in c("A","B","3004")){
   
   combined_objects[["noise"]][["ASE_EMMEANS"]] = rbind(combined_objects[["noise"]][["ASE_EMMEANS"]],noise_gm)
   
-  
+  ccl = cross_data[[cross]]$trans$cell_cycle_lods
+  ccl = ccl %>% mutate(cross = !!cross) %>% as_data_frame()
+  combined_objects[["cell_cycle_lods"]] = rbind(combined_objects[["cell_cycle_lods"]],ccl)
+  #cross_data$A$cis$ASE$ase_int
   
   #cross_data$A$cis$ASE$geno_mean_disp
   
 }
 
-combined_objects$noise$ASE  = combined_objects$noise$ASE %>% mutate(sig_new_filt = (p_adj_ase > .05 | (combined_objects$noise$ASE$estimate.cond*combined_objects$noise$ASE$estimate.disp < 0)) & p_adj_disp < 0.05)# %>%
+combined_objects$noise$ASE  = combined_objects$noise$ASE %>% mutate(sig_new_filt = (p_adj_ase > .05 | (combined_objects$noise$ASE$estimate.cond*combined_objects$noise$ASE$estimate.disp < 0)) & p_adj_disp < 1e-4)# %>%
 combined_objects$noise$ASE_EMMEANS = combined_objects$noise$ASE_EMMEANS  %>% mutate(cross2  = case_when(
   cross == "3004" ~ "YJM981 (red) x CBS2888 (purple)",
   cross == "B" ~ "YPS163 (red) x YJM145 (purple)",
   cross == "A" ~ "BY (red) x RM (purple)"
 ))
 
-combined_objects$cis_eqtl_ase = combined_objects$cis_eqtl_ase %>% mutate(cross2  = case_when(
+combined_objects$cis_eqtl_ase_noise = combined_objects$cis_eqtl_ase_noise %>% mutate(cross2  = case_when(
   cross == "3004" ~ "YJM981 x CBS2888",
   cross == "B" ~ "YPS163 x YJM145",
   cross == "A" ~ "BY x RM"
@@ -138,5 +149,8 @@ combined_objects$cis_eqtl_ase = combined_objects$cis_eqtl_ase %>% mutate(cross2 
 #combined_objects[["trans_maps"]] = rbind(hotspot_peaksA,hotspot_peaksB,hotspot_peaks3004)
 
 #cis_A = cross_data$A$cis$cis_test_with_disp_expr %>% mutate(cross = "A")
+
+
+
 
 

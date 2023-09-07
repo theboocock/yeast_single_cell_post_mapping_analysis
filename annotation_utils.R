@@ -90,7 +90,8 @@ vcf_annotation_16$min_prov = as.numeric(vcf_in$min_prov[idx_vcf_in])
 vcf_annotation_16$joseph_af = as.numeric(vcf_in$maf[idx_vcf_in])
 vcf_annotation_16$essential = as.numeric(vcf_in$essential[idx_vcf_in])
 vcf_annotation_16 = vcf_annotation_16 %>% mutate(seqnames=chrom,start=pos,end=pos) %>% as_granges()
-
+#### PROVEAN from the other VCF ????? ######
+#### Allele-frequecy in the new VCF ????? #### It's probably fine to jjust use the 1002 coding effects file right ###
 
 ### Load_all_annotations #### 
 ### 3004 #### 

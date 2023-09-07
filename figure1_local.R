@@ -18,6 +18,8 @@ one_pot_bulk =cross_data$A$cis$cis_test_with_disp_expr %>% full_join(cis_test_10
 
 sum(one_pot_bulk$FDR < 0.05 & one_pot_bulk$Beta * one_pot_bulk$coefficient > 0,na.rm=T)
 
+nrow(ap_combined %>% filter(p_adj.old < 0.05))
+nrow(ap_combined %>% filter(p_adj.hmm < 0.05))
 
 #p1=  magick::image_read_svg("../figure_and_tables_paper/Figures/one_p",width = 1600)
 #p1 = ggdraw() + draw_image(p1)
@@ -29,14 +31,14 @@ p3 = one_pot_bulk %>% mutate(single_cell_sig = FDR < 0.05) %>%filter(!is.na(Beta
   ggplot(aes(x=Beta,y=coefficient,color=factor(single_cell_sig))) + geom_point(size=1.5) + 
   theme_bw()  + stat_cor(method="spearman",size=8,cor.coef.name = "rho",show.legend = F) + theme(text=element_text(size=18))  + ylab("local eQTL effect (bulk)") + 
   xlab("local eQTL effect (one-pot)") + geom_vline(xintercept = 0) + geom_hline(yintercept = 0) +
-  ylim(c(-3,3))  + xlim(c(-4,4)) + 
-  scale_color_brewer(name="One-pot FDR",labels=c(">= 0.05","< 0.05"),palette ="Dark2")  + 
+  ylim(c(-3,3))  + xlim(c(-4,4))  +  scale_color_manual(name="One-pot FDR",labels=c(">= 0.05","< 0.05"),values=c("#e6ab02","#1b9e77")) +
   guides(color = guide_legend(override.aes = list(size = 8)))#guides(override.aes = aes(label = ""))
 rds = readRDS("../rproj/out/cell_cycle/00_BYxRM_480MatA_1/cell_cycle_final.RDS")
-p2 = DimPlot(rds$cc_seurat, group.by="cell_cycle",label = T,label.size = 18,pt.size = 2) + theme(text=element_text(size=18)) + ggtitle("") + scale_color_brewer(palette = "Dark2")
+p2 = DimPlot(rds$cc_seurat, group.by="cell_cycle",label = T,label.size = 12,pt.size = 2) + theme(text=element_text(size=18)) + ggtitle("") + scale_color_brewer(palette = "Set2") + theme(legend.position = "none")
 pg = plot_grid(p2,p3,labels=c("B","C"),label_size = 18)
 plot_grid(p1,pg,labels=c("A",""),nrow=2,rel_heights = c(1,2))
-ggsave("figures/figure1.png",bg="white",dpi=300)
+ggsave("figures/figure1.png",bg="white",dpi=300,width=16,height=12)
+ggsave("figures/figure1.svg",bg="white",dpi=300,width=16,height=12)
 
 #### Figure 1, done #####
 

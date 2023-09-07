@@ -139,6 +139,13 @@ load_trans_one_pot = function(cross){
   fdr_fx = readRDS(glue("{in_combined_dir}/fdrfx_NB_combined.RDS"))
   #hotspot_table_cc  %>% filter(int_count > fwer_threshcc) 
   background = colnames(segdata$Yr)
+  
+  #cross = cross
+  #hotspot_peaks = hotspot_peaks_n
+  #combined_peaks = ret$combined_peaks
+  
+    
+  
   enrich_list = hotspot_enrichment_and_function(cross=cross,
                                                 hotspot_peaks =  hotspot_peaks_n,
                                                 combined_peaks = ret$combined_peaks,
@@ -162,6 +169,7 @@ load_trans_one_pot = function(cross){
   hotspot_bins_final_gr = makeGRangesFromDataFrame(hotspot_bins_final)
   hotspot_bins_final_gr$n = hotspot_bins_final$n
   hotspot_bins_final_gr$bin = hotspot_bins_final$bin
+  hotspot_bins_final_gr$hotspot_pos = hotspot_bins_final$hotspot_pos
   cross_data_l[["hotspot_bins_final"]] = hotspot_bins_final_gr
   cross_data_l[["hotspot_list"]]$chrom_f = convert_chrom_to_simple_factor(cross_data_l[["hotspot_list"]]$chrom)
   

@@ -39,6 +39,8 @@ get_enrichment = function(gene_list, background=NULL){
   mf_res$type = "MF"
   bp_res$type = "BP"
   gg  = rbind(mf_res, bp_res)
+  print(gg)
+  gg$classic = str_replace_all(gg$classic,"<1e-30","1e-30")
   gg$classic_adj = p.adjust(gg$classic,method = "BH")
   out_mf_bp = rbind(mf_res, bp_res)  %>% mutate(classic = as.numeric(str_replace_all(classic,"<",""))) %>% filter(log2FC > 2 & classic < 1e-5)
   
@@ -54,6 +56,36 @@ get_enrichment = function(gene_list, background=NULL){
 
 #  )  
 #}
+
+whdquantile <- function(x, probs, weights = NA) {
+  cdf.gen <- function(n, p) return(function(cdf.probs) {
+    pbeta(cdf.probs, (n + 1) * p, (n + 1) * (1 - p))
+  })
+  wquantile.generic(x, probs, cdf.gen, weights)
+}
+
+wquantile.generic <- function(x, probs, cdf.gen, weights = NA) {
+  n <- length(x)
+  if (any(is.na(weights)))
+    weights <- rep(1 / n, n)
+  nw <- sum(weights)^2 / sum(weights^2) # Kish's effective sample size
+  
+  indexes <- order(x)
+  x <- x[indexes]
+  weights <- weights[indexes]
+  
+  weights <- weights / sum(weights)
+  cdf.probs <- cumsum(c(0, weights))
+  
+  sapply(probs, function(p) {
+    cdf <- cdf.gen(nw, p)
+    q <- cdf(cdf.probs)
+    w <- tail(q, -1) - head(q, -1)
+    sum(w * x)
+  })
+}
+
+
 hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lod_df_beta, cell_cycle_beta_df2,segdata,fdr_fx,background,out_name=NULL){
   #print(folder)
   #cross = basename(folder)
@@ -118,16 +150,72 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
   hotspot_peaks_tmp$hotspot_pos = hotspot_pos
   
   for(hotspot in unique(hotspot_peaks_tmp$bin)){
-    print(hotspot)
+    #print(hotspot)
     tmp_df = hotspot_peaks_tmp[hotspot_peaks_tmp$bin == hotspot,]
     #quants = quantile(tmp_df$pos,c(0.05,.1,.2,.8,.9,.95))
     #print(quants)
+    
+    #segdata
     buffer = 5e3
     g  = hotspot_peaks_tmp %>%  filter(bin ==hotspot) %>% arrange(-LOD) #filter(LOD > 10) %>% arrange(-LOD) 
-    start= g[1,]$CI.l - buffer
-    end = g[1,]$CI.r+ buffer
+    #g %>% filter(LOD > 10)
+    
+    pos_one = quantile(g$CI.l,prob=.2,F,T,3)
+    pos_two = quantile(g$CI.r,prob=0.8,F,T,3)
+    #whdquantile(g$CI.l,prob=.1,weights=g$LOD)
+    #whdquantile(g$CI.r,prob=.9,weights=g$LOD)
+    
+    #print(g)
+    chrom = unlist(lapply(str_split(colnames(segdata$Gsub),"_"), function(x){x[1]}))
+    pos = as.numeric(unlist(lapply(str_split(colnames(segdata$Gsub),"_"), function(x){x[2]})))
+    print(chrom)
+    ### Yea of course that doesn't work because I have to find the nearest marker ###
+    chrom_tmp = chrom[chrom == g$chrom[1]]
+    pos_tmp = pos[chrom == g$chrom[1]]
+    
+    
+    idx_one = which(min(abs(pos_tmp - pos_one)) == abs(pos_tmp - pos_one))
+    idx_two = which(min(abs(pos_tmp - pos_two)) == abs(pos_tmp - pos_two))
+    #print(idx_one)
+    #print(idx_two)
+    pos_one = pos_tmp[idx_one]
+    pos_two = pos_tmp[idx_two] 
+    left = which(g$chrom[1]==chrom & pos == pos_one) -2
+    right = which(g$chrom[1]==chrom & pos == pos_two) +2
+    #print(left) 
+    #print(right)
+    
+    #print(idx_one)
+    #print(idx_two)
+    ##left = idx_one - 2
+    #right = idx_two + 2
+    #left  = which(chrom == g$chrom[1] & pos == g$CI.l[1]) -2
+    #right =  which(chrom == g$chrom[1] & pos == g$CI.l[1]) + 2
+    
+    chrom_l = chrom[left]
+    chrom_r = chrom[right]
+    pos_l = pos[left]
+    pos_r = pos[right]
+    #print(left)
+    if(chrom_l != g$chrom[1]){
+      chrom_l = g$chrom[1]
+      pos_l = 1
+    }
+    if(chrom_r != g$chrom[1]){
+      chrom_r = g$chrom[1]
+      pos_r = chrom_lengths$lengths[chrom_lengths$chrom == g$chrom[1]]
+    }
+    
+    start= pos_l
+    end = pos_r
     region_df = data.frame(seqnames=unique(g$chrom),start=start,end=end) %>% as_granges()
     ##
+    
+    genes_in_region = join_overlap_inner(gff_in2,region_df)
+    
+    
+    #end(genes_in_region)
+    genes_in_region$tpos = round((start(genes_in_region) +    end(genes_in_region))/2)
     #split_snp_id = str_split(colnames(all_pheno_maps[[cross]]),"_")
     #chrom_snps  =lapply(split_snp_id, function(x){x[1]})
     #pos_snps = as.numeric(lapply(split_snp_id, function(x){x[2]}))
@@ -148,6 +236,8 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
     #hotspot_id 
     gene_list = g$transcript
     background = colnames(segdata$Yr)
+    background = (background[background %in% gff_in$Name[as.character(seqnames(gff_in)) != g$chrom[1]]])
+    
     enrich_df = get_enrichment(gene_list = g$transcript,background = background)
     #lod_dfs$`out/combined//3004`
     cell_cycle_causals = region_df %>% join_overlap_inner(cc_lods) %>% as_data_frame()
@@ -181,6 +271,12 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
     if(nrow(out_cc) == 0){
       out_cc = data.frame(DATA="NONE")
     }
+    ab = genes_in_region %>% as_data_frame() %>% dplyr::select(-Note,-Ontology_term,-Parent,-Alias) 
+    if(nrow(ab) == 0){
+      ab = data.frame(DATA="NONE")
+    }
+    #ab %>% write.table("test.txt")
+    
     peak_merged = hotspot_peaks[hotspot_peaks$transcript %in% g$transcript &
                                             hotspot_peaks$peak.marker %in% g$peak.marker,]
     
@@ -193,26 +289,41 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
       
     }
     # TODO CI doesn't need to be within the Trans CI that's weird. fix it
-    local_eqtls = local_eqtls %>% filter(CI.l > start &  CI.r < end & tpos > start & tpos < end)
+    
+    local_eqtls = local_eqtls %>% filter(tpos > start & tpos < end)
     local_eqtls = local_eqtls %>% inner_join(genes_name_trans,by=c("transcript"="gene_id"))
     local_eqtls = local_eqtls %>% arrange(-LOD)
+    if(nrow(local_eqtls) ==0){
+      local_eqtls = data.frame(DATA="NONE")
+    }
     hotspot_str_list = c(hotspot_str_list, hotspot_str)
-    annotation_list[[j]]=list(peak_merged=peak_merged,cell_cycle_lod=cell_cycle_causals,cell_cycle_assoc=dd,causals_round_robin=causals_round_robin,
-                                    assoc_round_robin=assoc_round_robin, df_qtl=df_qtl, provean_df = as.data.frame(annotation_provean_snps),
-                                    enrich_mf=enrich_df$out_mf_bp, enrich_kegg=enrich_df$kegg,
-                                    peak_merged=peak_merged,local_eqtls=local_eqtls,enrich_mf_raw=enrich_df$out_mf_bp_raw)
+    annotation_list[[j]]=list(cell_cycle_causals=cell_cycle_causals,cell_cycle_assoc=dd,causals_round_robin=causals_round_robin,
+                                    assoc_round_robin=assoc_round_robin, complete_assoc=df_qtl, provean_snps = as.data.frame(annotation_provean_snps),
+                                    GO=enrich_df$out_mf_bp, KEGG=enrich_df$kegg,GO_raw=enrich_df$out_mf_bp_raw,directional_hotspot_distal=peak_merged,
+                                   directional_hotspot_local=local_eqtls,genes_in_region=ab,eqtl_region=region_df)
+    
+    #annotation_list[[j]]
+    
+    #region_df = region_df %>% as_data_frame()
+    #content = openxlsx::createWorkbook(out_file)
+    #openxlsx::
+    #list()
+    
+    openxlsx::write.xlsx(annotation_list[[j]],file=out_file)
     
     
-    write.xlsx(cell_cycle_causals, file=out_file, sheetName = "cell_cycle_causals")
-    write.xlsx(out_cc,file=out_file, sheetName = "cell_cycle_assoc",append=T)
-    write.xlsx(causals_round_robin,file=out_file,sheetName = "causals_round_robin",append=T)
-    write.xlsx(assoc_round_robin,file=out_file,sheetName = "assoc_round_robin",append = T)
-    write.xlsx(df_qtl, file=out_file, sheetName = "complete_assoc", append=T)
-    write.xlsx(as.data.frame(annotation_provean_snps),file=out_file, sheetName = "provean_snps",append = T)
-    write.xlsx(enrich_df$out_mf_bp, file=out_file, sheetName="GO",append=T)
-    write.xlsx(enrich_df$kegg, file=out_file, sheetName="KEGG", append=T)
-    write.xlsx(peak_merged,file=out_file,sheetName="directional_hotspot_distal",append=T)
-    write.xlsx(local_eqtls, file=out_file,sheetName="directional_hotspot_local",append=T )
+    #openxlsx::write.xlsx(cell_cycle_causals, file=out_file, sheetName = "cell_cycle_causals")
+    #openxlsx::write.xlsx(out_cc,file=out_file, sheetName = "cell_cycle_assoc",overwrite =F)
+    #openxlsx::write.xlsx(causals_round_robin,file=out_file,sheetName = "causals_round_robin",overwrite = F)
+    #openxlsx::write.xlsx(assoc_round_robin,file=out_file,sheetName = "assoc_round_robin",overwrite = F)
+    #openxlsx::write.xlsx(df_qtl, file=out_file, sheetName = "complete_assoc", overwrite = F)
+    #openxlsx::write.xlsx(as.data.frame(annotation_provean_snps),file=out_file, sheetName = "provean_snps",overwrite = F)
+    #openxlsx::write.xlsx(enrich_df$out_mf_bp, file=out_file, sheetName="GO",overwrite = F)
+    #openxlsx::write.xlsx(enrich_df$kegg, file=out_file, sheetName="KEGG", overwrite = F)
+    #openxlsx::write.xlsx(peak_merged,file=out_file,sheetName="directional_hotspot_distal",overwrite = F)
+    #openxlsx::write.xlsx(local_eqtls, file=out_file,sheetName="directional_hotspot_local",overwrite = F)
+    #openxlsx::write.xlsx(ab, file=out_file, sheetName = "genes_in_hotspot",overwrite = F)
+    #openxlsx::write.xlsx(region_df, file=out_file,sheetName = "region_df", overwrite = F)
     j =j +1
   }
   names(annotation_list) = hotspot_str_list 

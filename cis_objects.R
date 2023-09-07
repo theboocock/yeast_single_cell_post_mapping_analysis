@@ -88,12 +88,19 @@ load_cis_one_pot= function(cross){
     pair_df = norm_diploid(pair_df)
     contrast_df=attr(in_cc_int,"contrasts") %>% bind_rows(.id="gene")
     in_rds$p_adj = p.adjust(in_rds$p.value,method = "fdr")
+    #in_rds
+    p2 = pair_df %>% filter(p_adj < 0.05) 
+    with_int = unique(p2$gene)
+    in_rds$has_interaction = in_rds$gene %in% with_int
+    #ase_noise
+    #in_cc_int %>% mutate()
     ase_noise= readRDS(glue("{in_folder_ase}/{cross}-all_models.RDS"))
+    ase_noise$has_interaction = ase_noise$gene %in% with_int
     nbin= readRDS(glue("{in_folder_ase}/nbin_{cross}.RDS"))
     gm = attr(nbin,'gm')
     gd = attr(nbin,"gd")
     gm_d = gm %>% inner_join(gd,by=c("gene","geno"),suffix=c(".mean",".disp")) 
-    ase_noise = ase_noise %>% mutate(p_adj_disp = p.adjust(p.llrt.disp,"fdr"))
+    ase_noise = ase_noise %>% mutate(p_adj_disp = p.adjust(p.value.disp,"fdr"))
     ase_noise = ase_noise %>% mutate(p_adj_ase = p.adjust(p.value.cond,"fdr"))
     ase_data = readRDS(glue("{in_folder_ase}/aseData.RDS"))
     diploid_assignments = readRDS(glue("{in_folder_ase}/diploid_assignments.RDS"))

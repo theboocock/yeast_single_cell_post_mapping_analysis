@@ -44,8 +44,8 @@ bl = mk[rownames(mk) %in% pm$gene_name,]  %>% rownames_to_column(var="gene") %>%
 library(ggpubr)
 bl %>% ggplot(aes(y=avg_log2FC,x=Beta.y)) + geom_point() + stat_cor(method="spearman")
 
-View(bl)
-mk %>% filt
+#View(bl)
+#mk %>% filt
 # A  =420/421
 # B = 416/417
 fisher.test(base::table(bl$avg_log2FC< 0,bl$Beta.y < 0))
@@ -130,8 +130,9 @@ gpa_c$cell_cycle = cell_cycle_clusters
 DimPlot(gpa_c,group.by="cell_cycle")
 
 
-aaa = table(gpa_c$cell_cycle == "G1",gpa_c$dataset)
-aaa
+aaa = table(gpa_c$cell_cycle == "G1" | gpa_c$cell_cycle == "M/G1",gpa_c$dataset)
+fisher.test(aaa)
+
 model = list()
 out_df_gpa = data.frame()
 out_df_gpa1_without_cc = data.frame()
@@ -143,9 +144,14 @@ for(cc in unique(gpa_c$cell_cycle)){
   aa = glm(y ~ log(gpa_c$nCount_RNA) + gpa_c$dataset,family="binomial")
   
   af = (drop1(aa,test="Chisq"))
+  print(af)
   aa1 = glm(y ~ gpa_c$dataset,family="binomial")
   
   
+  aa = glm(y ~ log(gpa_c$nCount_RNA) * gpa_c$dataset)
+  summary(aa)
+  aa = glm(y ~  gpa_c$dataset)
+  summary(aa)
   
   print(summary(aa))
   aa = emmeans::emmeans(aa,spec=~dataset)
@@ -154,7 +160,7 @@ for(cc in unique(gpa_c$cell_cycle)){
   
   out_df_gpa = rbind(out_df_gpa,data.frame(p1) %>% mutate(lrt=af$`Pr(>Chi)`[3],cell_cycle=cc))
   af = (drop1(aa1,test="Chisq"))
-  
+  print(af)
   aa1 = emmeans::emmeans(aa1, spec=~dataset)
   
   
@@ -180,7 +186,7 @@ FeaturePlot(gpa_c,"nCount_RNA")
 
 
 pairs(aaaa)
-DimPlot(gpa_c,group.by="dataset")
+DimPlot(gpa_c)
 
 
 gpa_c@meta.data %>% group_by(cell_cycle, dataset) %>% summarise(n=n())
@@ -241,7 +247,7 @@ gpa_cm <- RunPCA(gpa_cm, verbose = FALSE)
 gpa_cm <- RunUMAP(gpa_cm, dims = 1:30, verbose = FALSE)
 gpa_cm<- FindNeighbors(gpa_cm, dims = 1:12, verbose = FALSE)
 gpa_cm <- FindClusters(gpa_cm, verbose = FALSE,resolution = 0.3)
-FeaturePlot(gpa_cm,"MFA1")
+#FeaturePlot(gpa_cm,"MFA1")
 gpa_cm$dataset = unlist(lapply(str_split(rownames(gpa_cm@meta.data),"_"), function(x){x[1]}))
 
 
@@ -263,7 +269,7 @@ all_m %>% filter(cluster == 10) %>% filter(avg_log2FC >1)
 out_df_gpa2= data.frame()
 for(cc in unique(gpa_cm$seurat_clusters)){
   print(cc)
-  aa = glm(gpa_cm$seurat_clusters == cc ~ gpa_cm$dataset,family="binomial")
+  aa = glm(gpa_cm$seurat_clusters == cc ~ log(gpa_cm$nCount_RNA) + gpa_cm$dataset,family="binomial")
   print(summary(aa))
   aa = emmeans::emmeans(aa,spec=~dataset)
   p1 = pairs(aa)
@@ -271,5 +277,6 @@ for(cc in unique(gpa_cm$seurat_clusters)){
 }
 summary(glm(gpa_cm$seurat_clusters == 0 ~ gpa_cm$dataset,family = "binomial"))
 
-
-FeaturePlot(gpa_cm,anno$Marker)
+DimPlot(gpa_cm)
+FeaturePlot(gpa_c,"nCount_RNA",pt.size = 2)
+out_df_gpa2
