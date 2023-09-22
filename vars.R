@@ -76,9 +76,7 @@ crosses.to.parents=list(
   '3028'=c("CLIB219x", "M22")       #16
 )
 
-good.dips=list(
-  '13_Group1_diploids_3004_2444_3051_7point5K_Feb_21'=names(crosses.to.parents)[c(2,4,14)],
-  '14_GP1_3004_3051_274_375_May10'=names(crosses.to.parents)[c(4,14)],
+good.dips=list('13_Group1_diploids_3004_2444_3051_7point5K_Feb_21'=names(crosses.to.parents)[c(4,14)],
   '18_3051_May10'=names(crosses.to.parents)[2])
 #'15_GP2_376_377_393_3008_May10'=names(crosses.to
 #'
@@ -89,5 +87,6 @@ chrom_lengths_plot = data.frame(chrom=names(BSgenome.Scerevisiae.UCSC.sacCer3)[1
 chrom_lengths_plot = rbind(chrom_lengths_plot,data.frame(chrom=names(BSgenome.Scerevisiae.UCSC.sacCer3)[1:16], pos=0))
 chrom_lengths_plot$tchrom_short_f = convert_chrom_to_simple_factor(chrom_lengths_plot$chrom,reverse = T)
 chrom_lengths_plot$chrom_short_f = convert_chrom_to_simple_factor(chrom_lengths_plot$chrom)
+
 
 source("load_cc.R")

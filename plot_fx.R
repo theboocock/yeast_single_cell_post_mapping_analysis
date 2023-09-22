@@ -39,6 +39,7 @@ make_hotspot_map = function(combined_peaks,title="",text_size=18,fdr_filt = 0.05
 
 
 clean_up_hotspots_for_raster = function(df_hotspot){
+  chrom_old  = "NA"
   for(i in 1:nrow(df_hotspot)){
     pos = df_hotspot$pos[i]
     chrom = df_hotspot$chr[i]

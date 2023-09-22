@@ -39,7 +39,7 @@ get_enrichment = function(gene_list, background=NULL){
   mf_res$type = "MF"
   bp_res$type = "BP"
   gg  = rbind(mf_res, bp_res)
-  print(gg)
+  #print(gg)
   gg$classic = str_replace_all(gg$classic,"<1e-30","1e-30")
   gg$classic_adj = p.adjust(gg$classic,method = "BH")
   out_mf_bp = rbind(mf_res, bp_res)  %>% mutate(classic = as.numeric(str_replace_all(classic,"<",""))) %>% filter(log2FC > 2 & classic < 1e-5)
@@ -144,11 +144,12 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
   annotation_list = list()
   j= 1    
   betas_pheno = load_pheno_maps(cross, segdata)
+  traits = rownames(betas_pheno)
   # TODO test tommorrow
   str_split_2 = str_split(unlist(lapply(str_split(hotspot_peaks_tmp$bin,":"), function(x){x[2]})),"-")
   hotspot_pos = round((as.numeric(unlist(lapply(str_split_2,function(x){x[1]}))) +  as.numeric(unlist(lapply(str_split_2,function(x){x[2]}))))/2)
   hotspot_peaks_tmp$hotspot_pos = hotspot_pos
-  
+  #hotspot_out_all_confidence_interval = data.frame()
   for(hotspot in unique(hotspot_peaks_tmp$bin)){
     #print(hotspot)
     tmp_df = hotspot_peaks_tmp[hotspot_peaks_tmp$bin == hotspot,]
@@ -159,16 +160,17 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
     buffer = 5e3
     g  = hotspot_peaks_tmp %>%  filter(bin ==hotspot) %>% arrange(-LOD) #filter(LOD > 10) %>% arrange(-LOD) 
     #g %>% filter(LOD > 10)
-    
-    pos_one = quantile(g$CI.l,prob=.2,F,T,3)
-    pos_two = quantile(g$CI.r,prob=0.8,F,T,3)
+    g2 = g %>% arrange(-LOD) %>% head(n=20)
+    #print(g2)
+    pos_one = quantile(g2$CI.l,prob=.1,F,T,3)
+    pos_two = quantile(g2$CI.r,prob=0.9,F,T,3)
     #whdquantile(g$CI.l,prob=.1,weights=g$LOD)
     #whdquantile(g$CI.r,prob=.9,weights=g$LOD)
     
     #print(g)
     chrom = unlist(lapply(str_split(colnames(segdata$Gsub),"_"), function(x){x[1]}))
     pos = as.numeric(unlist(lapply(str_split(colnames(segdata$Gsub),"_"), function(x){x[2]})))
-    print(chrom)
+    #print(chrom)
     ### Yea of course that doesn't work because I have to find the nearest marker ###
     chrom_tmp = chrom[chrom == g$chrom[1]]
     pos_tmp = pos[chrom == g$chrom[1]]
@@ -180,8 +182,8 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
     #print(idx_two)
     pos_one = pos_tmp[idx_one]
     pos_two = pos_tmp[idx_two] 
-    left = which(g$chrom[1]==chrom & pos == pos_one) -2
-    right = which(g$chrom[1]==chrom & pos == pos_two) +2
+    left = which(g$chrom[1]==chrom & pos == pos_one) 
+    right = which(g$chrom[1]==chrom & pos == pos_two)# +2
     #print(left) 
     #print(right)
     
@@ -210,7 +212,7 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
     end = pos_r
     region_df = data.frame(seqnames=unique(g$chrom),start=start,end=end) %>% as_granges()
     ##
-    
+    #print(region_df)    
     genes_in_region = join_overlap_inner(gff_in2,region_df)
     
     
@@ -231,7 +233,7 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
     # = all_pheno_maps[[cross]][, which(snp_ids_in_pheno %in% snp_ids2)]
     betas_pheno_tmp = betas_pheno[,colnames(betas_pheno) %in% g$peak.marker[1]]
     lods = get_lod_from_r(betas_pheno_tmp, n=dim(seg.recoded[[cross]])[2])
-    df_qtl = data.frame(betas=betas_pheno_tmp,lods=lods)
+    df_qtl = data.frame(traits=traits,betas=betas_pheno_tmp,lods=lods)
     #betaswhich(snp_ids_in_pheno %in% snp_ids2)
     #hotspot_id 
     gene_list = g$transcript
@@ -249,11 +251,11 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
     if(!is.null(out_name)){
       dir.create(glue("out/fine_mapping/{out_name}"),recursive = T)
       out_file = glue("out/fine_mapping/{out_name}/{hotspot}_{no_transcripts}_finemapping.xlsx")
-      print(out_file)
+      #print(out_file)
     }else{
       dir.create(glue("out/fine_mapping/{cross}"),recursive = T)
       out_file = glue("out/fine_mapping/{cross}/{hotspot}_{no_transcripts}_finemapping.xlsx")
-      print(out_file)
+      #print(out_file)
     }
     hotspot_str = glue("{hotspot}_{no_transcripts}")
     if(nrow(cell_cycle_causals) == 0){
@@ -311,7 +313,7 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
     
     openxlsx::write.xlsx(annotation_list[[j]],file=out_file)
     
-    
+   # hotspot_out_all_confidence_interval = rbind(hotspot_out_all_confidence_interval,region_df)
     #openxlsx::write.xlsx(cell_cycle_causals, file=out_file, sheetName = "cell_cycle_causals")
     #openxlsx::write.xlsx(out_cc,file=out_file, sheetName = "cell_cycle_assoc",overwrite =F)
     #openxlsx::write.xlsx(causals_round_robin,file=out_file,sheetName = "causals_round_robin",overwrite = F)
@@ -329,7 +331,7 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
   names(annotation_list) = hotspot_str_list 
   hotspots_list=hotspot_peaks_tmp
   #i=i+1
-  return(list(annotation_list=annotation_list,hotspot_list=hotspots_list))
+  return(list(annotation_list=annotation_list,hotspot_list=hotspots_list,hotspot_threshold=sig_hotspot))
 }
 
 

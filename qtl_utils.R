@@ -38,6 +38,16 @@ convert_chrom_to_simple_factor = function(chrom,reverse=F){
 }
 
 
+convert_cell_cycle_to_simple_factor = function(cell_cycle){
+  cell_cycle = as.character(cell_cycle)
+  order_levels = c("M/G1","G1","G1/S","S","G2/M")
+  if(any(str_count(cell_cycle,":") > 0 )){
+    cell_cycle = str_replace_all(cell_cycle,":","/")
+  }
+  cell_cycle = factor(cell_cycle,levels=order_levels)
+  return(cell_cycle)
+}
+
 
 load_pheno_maps = function(cross,segdata){
   #all_pheno_maps = list()

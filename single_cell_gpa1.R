@@ -13,13 +13,9 @@ idx_keep_b = (colSums(sample_b) < 25e3)
 
 sample_a = sample_a[,idx_keep_a]
 sample_b= sample_b[,idx_keep_b]
-
 sample_a_m = CreateSeuratObject(counts=sample_a)
-
-
 sample_b_m = CreateSeuratObject(counts=sample_b)
 gpa_m = merge(sample_a_m,sample_b_m,add.cell.ids=c("A","B"),project="GPA1")
-
 gpa_m = SCTransform(gpa_m)
 gpa_m <- RunPCA(gpa_m, verbose = FALSE)
 gpa_m <- RunUMAP(gpa_m, dims = 1:30, verbose = FALSE)
@@ -32,23 +28,22 @@ gpa_m$sample = sample
 aaa = FindMarkers(gpa_m,group.by="sample",ident.1="A",ident.2 = "B")
 #aaa[rownames(aaa) == "MFA1",]
 mk = FindMarkers(gpa_m,group.by="sample",ident.1="A",ident.2 = "B",logfc.threshold = 0,min.pct = 0)
-
-
-pm = cross_data$B$trans$hotspot_enrichments_and_overlaps$`chrVIII:46887-140660_51`$peak_merged
+pm = cross_data$B$trans$hotspot_enrichments_and_overlaps$`chrVIII:46887-140660_51`$directional_hotspot_distal
 #genes_name_trans 
-
 pm$gene_name[!pm$gene_name %in% rownames(mk)]
-
 bl = mk[rownames(mk) %in% pm$gene_name,]  %>% rownames_to_column(var="gene") %>% inner_join(pm,by=c("gene"="gene_name"))
 #%>% inner_join(pm,by=c(""))
 library(ggpubr)
 bl %>% ggplot(aes(y=avg_log2FC,x=Beta.y)) + geom_point() + stat_cor(method="spearman")
-
 #View(bl)
 #mk %>% filt
 # A  =420/421
 # B = 416/417
+sum(bl$avg_log2FC * bl$Beta.y  < 0)
+binom.test(x=36,n=50)
+
 fisher.test(base::table(bl$avg_log2FC< 0,bl$Beta.y < 0))
+
 
 sample_a_cc = sample_a[rownames(sample_a) %in% cell_cycle_df$NAME,]
 sample_b_cc = sample_b[rownames(sample_b) %in% cell_cycle_df$NAME,]
@@ -129,8 +124,16 @@ table(cell_cycle_clusters)
 gpa_c$cell_cycle = cell_cycle_clusters
 DimPlot(gpa_c,group.by="cell_cycle")
 
+table()
+aaa = table(gpa_c$cell_cycle == "G1",gpa_c$dataset)
+aaa
+aaa/total
 
-aaa = table(gpa_c$cell_cycle == "G1" | gpa_c$cell_cycle == "M/G1",gpa_c$dataset)
+
+
+total = apply(aaa,1,sum)
+
+
 fisher.test(aaa)
 
 model = list()
@@ -178,7 +181,7 @@ glc = gpa_c$cell_cycle == "G1" | gpa_c$cell_cycle == "M/G1"
 aaaa = emmeans::emmeans(glm(glc ~ log(gpa_c$nCount_RNA) +  gpa_c$dataset,family="binomial"),spec=~dataset)
 
 m1  = glm(glc ~ (log(gpa_c$nCount_RNA))+  gpa_c$dataset,family="binomial")
-
+summary(m1)
 
 summary(aaaa)
 
@@ -241,6 +244,7 @@ sample_a_cm = CreateSeuratObject(counts=sample_a_cc)
 sample_b_cm = CreateSeuratObject(counts=sample_b_cc)
 gpa_cm = merge(sample_a_cm,sample_b_cm,add.cell.ids=c("A","B"),project="GPA1")
 
+set.seed(42)
 
 gpa_cm = SCTransform(gpa_cm)
 gpa_cm <- RunPCA(gpa_cm, verbose = FALSE)
@@ -275,8 +279,11 @@ for(cc in unique(gpa_cm$seurat_clusters)){
   p1 = pairs(aa)
   out_df_gpa2 = rbind(out_df_gpa2,data.frame(p1) %>% mutate(cell_cycle=cc))# %>% mutate(estimate=-estimate))
 }
-summary(glm(gpa_cm$seurat_clusters == 0 ~ gpa_cm$dataset,family = "binomial"))
+out_df_gpa2
 
+mk_no_mfa1 = FindAllMarkers(gpa_cm)
+summary(glm(gpa_cm$seurat_clusters == 0 ~ gpa_cm$dataset,family = "binomial"))
+FeaturePlot(gpa_cm, "MFA1")
 DimPlot(gpa_cm)
 FeaturePlot(gpa_c,"nCount_RNA",pt.size = 2)
 out_df_gpa2

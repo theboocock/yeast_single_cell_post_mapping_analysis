@@ -70,12 +70,14 @@ load_cis_one_pot= function(cross){
   #cross_data_l[["hotspot_peaks"]] = readRDS(glue("{in_combined_dir}/hotspot_peaks.RDS"))
   cross_data_l[["fdr_cis_fx"]] = readRDS(glue("{in_combined_dir}/fdrfx_NB_combined.RDS"))
   
-  sc_eqtl_row = summary_table %>% filter(cross == !!cross)  %>% filter(type!="sceQTL")
+  sc_eqtl_row = summary_table %>% filter(cross == !!cross)  %>% filter(type!="eQTL")
   j = 1
   ase=list()
   for(in_folder_ase in sc_eqtl_row$folder){
     print(in_folder_ase)
+    new_ase_folder = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/diploid_flip/"
     b_f = basename(in_folder_ase)
+    in_folder_ase = glue("{new_ase_folder}{b_f}")
     #in_folder_cc = readRDS(glue("../rproj/out/cell_cycle/{b_f}"))
     cc_in = readRDS(glue("../rproj/out/cell_cycle/{b_f}/{cross}/cell_cycle_final.RDS"))
     seurat_in = readRDS(glue("../rproj/out/cell_cycle/{b_f}/{cross}/all.RDS"))
@@ -105,8 +107,23 @@ load_cis_one_pot= function(cross){
     ase_data = readRDS(glue("{in_folder_ase}/aseData.RDS"))
     diploid_assignments = readRDS(glue("{in_folder_ase}/diploid_assignments.RDS"))
     phased_counts = readRDS(glue("{in_folder_ase}/phasedCounts_{cross}.RDS"))
-    ase_list = list(ase_cis=in_rds, ase_int=pair_df,ase_int_contrast=contrast_df, ase_noise=ase_noise,ase_data=ase_data,diploid_assignments=diploid_assignments,
+    
+    
+    
+    #if(cross %in% c("3004","B")){
+    #  in_rds = in_rds %>% mutate(estimate=-estimate)
+    #  in_rds = in_rds %>% mutate(statistic=-statistic)
+    #  pair_df = pair_df   %>% mutate(estimate=-estimate, z.ratio=-z.ratio,estimate2=-estimate2)
+    #  tmp = contrast_df$asymp.LCL
+    #  contrast_df = contrast_df %>% mutate(emmean=-emmean,asymp.LCL=-asymp.UCL,asymp.UCL=-tmp)
+    #  ase_noise %>% mutate(estimate=-estimate,statistic=-statistic,estimate.cond=-estimate.cond,
+    #                       statistic.cond=-statistic.cond,estimate.disp=-estimate.disp,statistic.disp=-statistic.disp,
+    #                       estimate.red.cond)
+    #}
+    ase_list = list(ase_cis=in_rds, ase_int=pair_df,ase_int_contrast=contrast_df, ase_noise=ase_noise,
+                    ase_data=ase_data,diploid_assignments=diploid_assignments,
                     phased_counts=phased_counts,cc_in=cc_in,all_rds=seurat_in,geno_mean_disp=gm_d)
+    
     if (type == "ASE"){
       cross_data_l[["ASE"]] = ase_list  
       # cross_data[[cross]][[""]]

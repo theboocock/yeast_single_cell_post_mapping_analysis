@@ -78,6 +78,7 @@ plate4$plate = "Leslie 2 7_28_23"
 
 p_m = rbind(plate1,plate2,plate3,plate4,plate5,plate6,plate7) #%>% ggplot(aes(y=))
 p_m = p_m %>% filter(ID != "469I 82R")
+p_m %>% filter(values < 0.085 & values > 0.07)
 m_resid = residuals(lm((p_m$doubling) ~ p_m$plate))
 p_m$resid = m_resid + 0.4519579
 
@@ -176,6 +177,7 @@ pos = read.gdsn(index.gdsn(genofile,"snp.position"))
 chrom =  read.gdsn(index.gdsn(genofile,"snp.chromosome"))
 allele =  read.gdsn(index.gdsn(genofile,"snp.allele"))
 
+#Gpa1
 idx = which(chrom == "VIII" & pos == "114674")
 #idx2 = which(chrom == "XIII" & pos == "25025")
 
@@ -208,7 +210,7 @@ anova(lm(ccc$het_sites_prop ~ ccc$gpa))
 wilcox.test(ccc$het_sites_prop ~ ccc$gpa)
 
 props = c()
-for(idx2 in sample(idx_all,size=1e4,replace = T)){
+for(idx2 in sample(idx_a/ll,size=1e4,replace = T)){
   tmp_gt2 = gt3[,idx2]
   #i  
   len =  sum(!is.na(tmp_gt2[idx_mosaic]))

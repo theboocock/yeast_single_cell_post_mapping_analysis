@@ -123,10 +123,7 @@ combined_objects$noise$ASE %>% filter(p_adj_ase > .05 | (combined_objects$noise$
 
 
 
-combined_objects$cis_eqtl_ase_noise %>% ggplot(aes(x=Beta,y=estimate,color=FDR < 0.05)) + geom_point() + facet_wrap(~cross2,nrow=3) + theme_bw() + theme(text=element_text(size=18)) +
-  coord_cartesian(ylim=c(-2,2)) +  stat_cor(method="spearman",label.x = c(-2),label.y=c(2,1.8),size=8)   + geom_vline(xintercept = 0) + geom_hline(yintercept = 0) + xlab("local eQTL effect (one-pot)")  + ylab("allele-specific expression effect") + 
-  scale_color_brewer(name="One-pot FDR",labels=c(">= 0.05","< 0.05"),palette ="Dark2") +   
-  guides(color = guide_legend(override.aes = list(size = 8)))#+ geom_hline() +
+#+ geom_hline() +
 
 
 

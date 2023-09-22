@@ -11,35 +11,20 @@ summary_table[1,]
 #cell cycle (M/G1, G1, G1/S, S, G2/M) via unsupervised clustering of the expression of 787 cell-cycle-regulated genes (Spellman et al. 1998) 
 #in combination with 22 cell-cycle-informative marker genes
 #  Using this classification approach, we found that 2,139 genes displayed significant variation by cell cycle stage (likelihood ratio test, FDR < 0.05; Table S5
-sum(ap_var$CC.q < 0.05,na.rm=T)
-# As expected, genes that were used to inform our classifier were enriched for having cell-cycle effects 
-#(483 of 787, OR=7.9, Fisher’s exact test, P < 2.2x10-16)
-fisher.test(table(ap_var$gene %in% cell_cycle_big_df$ORF,ap_var$CC.q < 0.05 ))
-
-
-
-
-aa = (table(ap_var$gene %in% cell_cycle_big_df$ORF,ap_var$CC.q > 0.05 | is.na(ap_var$CC.q)))
-aa[2,2] = 304
-fisher.test(aa)
-(1656/2703)/(483/153)
-
-483 / (153)
-1656 / (2703 + 1656)
-
-
-table(ap_var$gene %in% cell_cycle_big_df$ORF,ap_var$CC.q < 0.05)
-#accuracy = apply(ap_match_combined == ap_match_round, 1, sum)/ncol(ap_match_combined)
-
-
+sum(ap_icc$CC.q < 0.05,na.rm=T)
+# We observed a median of 17 cells per segregant, with 277 of the segregants sampled more than ten times (Figure S4)
 median(seg_match_df$Freq)
 sum(seg_match_df$Freq > 10)
-
+#The genotypes measured from scRNA-seq data were in high agreement with those obtained from whole-genome sequencing of the same strains (median genotype agreement 92.5%). T
+median(ap_df$barcode.features$accuracy)
 #median(accuracy)
+
+nrow(ap_combined %>% filter(p_adj.old < 0.05))
+nrow(ap_combined %>% filter(p_adj.hmm < 0.05))
+sum(ap_combined$sig_both)
 
 #We sampled 250,000 MATa segregants and used scRNA-seq to measure the expression of 5,435 transcripts in 27,744 single cells
 summary_table[2,]
-
 
 ## . We mapped 1,031 local eQTLs at a FDR of 5%. We compared the results in the BYxRM cross to those based on expression measurements from bulk RNA-seq (Albert et al. 2018) and found that 717 (69.5%) of the 1,031 local eQTLs
 #were also detected as statistically significant in that study, and an additional 108 local eQTLs showed effects in the same direction (Figure 1C, 2A).
@@ -116,6 +101,8 @@ sum(combined_objects$noise$ASE$sig_new_filt,na.rm=T)
 
 combined_objects$noise$ASE %>% group_by(cross) %>% summarise(sig=sum(sig_new_filt,na.rm=T),n=n())
 
+
+
 #  We identified that 116 (3.9%) of our 2,945 local eQTLs (57 of 1,031 local eQTLs for BYxRM, 
 #3 of 721 local eQTLs for YJM981xCBS2888, and 56 of 1,193 local eQTLs for YPS163xYJM145) had cell-cycle stage local eQTL interactions
 #at a FDR of 5% across our mapping panels. We expanded our search to trans eQTLs and found that 790 (24.4%) of our 3,238 trans eQTLs
@@ -139,13 +126,13 @@ mat1_res= fisher.test(mat1)
 1/mat1_res$estimate
 
 
-### We mapped a total of 23 unique cell-cycle occupancy QTLs (4 cell-cycle occupancy QTL for BYxRM, 9 cell-cycle occupancy for YJM981xCBS2888,
-#and 6 cell-cycle occupancy QTL for YPS163xYJM145)
+### We mapped a total of 20 unique cell-cycle occupancy QTLs (4 cell-cycle occupancy QTL for BYxRM, 6 cell-cycle occupancy for YJM981xCBS2888,
+#and 10 cell-cycle occupancy QTL for YPS163xYJM145)
 
 #combined_objects
 #combined_objects$noise$NOISE_CIS_M
 
-combined_objects$cell_cycle_lods %>% group_by(cross) %>% summarise(n=n(),n_bins=length(unique(bin)))
+combined_objects$cell_cycle_lods %>% group_by(experiment) %>% summarise(n=n(),n_bins=length(unique(bin)))
 
 table(cross_data$A$trans$cell_cycle_lods$bin)
 
