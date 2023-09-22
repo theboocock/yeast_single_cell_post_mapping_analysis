@@ -8,3 +8,5 @@ data/*
 1012.gds
 out/*
 .Rproj.user
+tables/*
+fig_final/*
