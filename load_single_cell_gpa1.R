@@ -91,7 +91,7 @@ cell_cycle_rds_list = list(gpa_cm=gpa_cm, mk_no_mfa1, gpa_c=gpa_c, mk_c_w_mfa1=g
 
 
 
-saveRDS(cell_cycle_rds_list,file="../rproj/out/cell_cycle/cell_cycle_plot_object.RDS")
+saveRDS(cell_cycle_rds_list,file="data/out/cell_cycle/cell_cycle_plot_object.RDS")
 
 
 

@@ -1,13 +1,13 @@
-theta_1000 = readRDS("../rproj/out/combined/Ap/bGLMM_bulk_theta.RDS")
+theta_1000 = readRDS("data/out/combined/Ap/bGLMM_bulk_theta.RDS")
 theta_1000_df = data.frame(transcript=names(theta_1000),theta=theta_1000)
 
-gene_expr_1000 = readRDS("../rproj/out/combined/Ap/mean_TPM_bulk_BYxRM1000.RDS")
+gene_expr_1000 = readRDS("data/out/combined/Ap/mean_TPM_bulk_BYxRM1000.RDS")
 gene_expr_1000_df =data.frame(transcript=names(gene_expr_1000),expr=gene_expr_1000)
-cis_test_1000 = readRDS("../data/bulkEQTL_cis_only_test.RDS")
+cis_test_1000 = readRDS("data/bulkEQTL_cis_only_test.RDS")
 cis_test_1000$p_adj = p.adjust(cis_test_1000$p.value,method="fdr")
 #(("../rproj/out/combined/Ap/"))
 bulk_local_eQTL = cis_test_1000%>% inner_join(gene_expr_1000_df,by="transcript")
-augmented_peaks = readRDS("../rproj/out/peaks_per_gene_augmented.RDS")
+augmented_peaks = readRDS("data/out/peaks_per_gene_augmented.RDS")
 aug_peaks = bind_rows(augmented_peaks,.id="gene")
 
 get_chrom_pos_end = function(x){
@@ -21,7 +21,7 @@ get_chrom_pos_end = function(x){
 
 cross_data$A_bulk$cis = bulk_local_eQTL
 
-segdata= readRDS("../rproj/out/combined/A/segData.RDS")
+segdata= readRDS("data/out/combined/A/segData.RDS")
 pos_chr_peak = get_chrom_pos_end(aug_peaks$pmarker)
 gff_in_df = gff_in %>% as_data_frame()
 gff_in_df = gff_in_df %>% mutate(mid=round((start+end)/2))

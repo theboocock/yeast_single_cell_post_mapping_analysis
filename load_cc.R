@@ -1,9 +1,9 @@
 
 set.seed(42)
-anno = readRDS("../data/ccdf.20210511.RDS")
-cell_cycle_df = read.csv("..//data/botstein/botstein_genes.csv")
+anno = readRDS("data/cc/ccdf.20210511.RDS")
+cell_cycle_df = read.csv("data/cc/botstein_genes.csv")
 
-gff_in = import.gff("/media/theboocock/Data/Dropbox/PHDTHESIS/Single-CellRNASEQ/eqtls/ref_data/yeast/gffs/saccharomyces_cerevisiae.gff")
+gff_in = import.gff("data/saccharomyces_cerevisiae.gff")
 
 #genes_gtf = import.gff("/media/hoffman//sceqtl/2021/ref/yeast/genes/genes.gtf")
 #genes_gtf_df = genes_gtf %>% as_data_frame()
@@ -32,7 +32,7 @@ anno$scer_gene = paste("SCER-",anno$Marker,sep="")
 
 #factor(anno$Type,levels = c("M/G1","G1","S","G2/M")
 #cell_cycle_df
-cell_cycle_big_df = read.csv("../data/botstein/cell_cycle.csv")
+cell_cycle_big_df = read.csv("data/cc//cell_cycle.csv")
 
 cell_cycle_big_df = cell_cycle_big_df %>% inner_join(cell_cycle_df, by=c("ORF"="ORF"))
 cell_cycle_big_df$NAME2  = paste("SCER-",cell_cycle_big_df$NAME,sep="")

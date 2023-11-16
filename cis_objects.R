@@ -76,6 +76,9 @@ load_cis_one_pot= function(cross){
   for(in_folder_ase in sc_eqtl_row$folder){
     print(in_folder_ase)
     new_ase_folder = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/diploid_flip/"
+    
+    old_ase_folder = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/"
+    
     b_f = basename(in_folder_ase)
     in_folder_ase = glue("{new_ase_folder}{b_f}")
     #in_folder_cc = readRDS(glue("../rproj/out/cell_cycle/{b_f}"))
@@ -96,6 +99,11 @@ load_cis_one_pot= function(cross){
     in_rds$has_interaction = in_rds$gene %in% with_int
     #ase_noise
     #in_cc_int %>% mutate()
+    old_ase_folder= glue("{old_ase_folder}{b_f}") 
+    
+    list.files(old_ase_folder)
+    ase_noise_nbin1 = readRDS(glue("{old_ase_folder}/nbin1_{cross}.RDS"))
+    
     ase_noise= readRDS(glue("{in_folder_ase}/{cross}-all_models.RDS"))
     ase_noise$has_interaction = ase_noise$gene %in% with_int
     nbin= readRDS(glue("{in_folder_ase}/nbin_{cross}.RDS"))
@@ -122,7 +130,7 @@ load_cis_one_pot= function(cross){
     #}
     ase_list = list(ase_cis=in_rds, ase_int=pair_df,ase_int_contrast=contrast_df, ase_noise=ase_noise,
                     ase_data=ase_data,diploid_assignments=diploid_assignments,
-                    phased_counts=phased_counts,cc_in=cc_in,all_rds=seurat_in,geno_mean_disp=gm_d)
+                    phased_counts=phased_counts,cc_in=cc_in,all_rds=seurat_in,geno_mean_disp=gm_d,ase_noise_nbin1=ase_noise_nbin1)
     
     if (type == "ASE"){
       cross_data_l[["ASE"]] = ase_list  

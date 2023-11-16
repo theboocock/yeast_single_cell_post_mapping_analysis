@@ -31,6 +31,10 @@ library(ggrepel)
 avg_m %>% filter(gene_name == "HSP12")
 
 
+nrow(combined_objects$noise$ASE_EMMEANS %>% dplyr::filter(theta > -3 & theta < 5) %>% dplyr::filter(emmean.mean > -5.5 & emmean.mean < 5))
+
+nrow(combined_objects$noise$ASE_EMMEANS)
+
 combined_objects$noise$ASE_EMMEANS %>%  ggplot(aes(y=theta,x=emmean.mean)) + geom_point(alpha=0.05) + geom_segment(data=segment_subset,aes(x=emmean.mean_A,y=theta_A,xend=emmean.mean_B,yend=theta_B),size=.5) + stat_smooth(level=.99) +
   geom_point(data=segment_subset,aes(x=emmean.mean_A,y=theta_A),color="red",size=5) +  #+ geom_point(data=segment_subset,aes(x=emmean.mean_B,y=theta_B),color="purple",size=2) + 
   geom_point(data=segment_subset,aes(x=emmean.mean_B,y=theta_B),color="purple",size=5) +

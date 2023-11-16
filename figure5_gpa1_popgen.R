@@ -2,6 +2,7 @@ source("plate_reader_utils.R")
 conditions = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/gal_final_github_october/data/plate_reader/mutants_final_freezer_gal/gal_mutants_glu_feb2019_conditions.csv"
 gpa_validation_folder = "/media/theboocock/Data/Dropbox/Postdoc/projects/gpa_validation/"
 glue("{gpa_validation_folder}/")
+# TODO move these files 
 
 
 add_labels_laura_strains2 = function(ypd_growth){

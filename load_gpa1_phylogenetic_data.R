@@ -1,10 +1,10 @@
 library(SNPRelate)
-genofile = snpgdsOpen("1012.gds")
+genofile = snpgdsOpen("data/joseph//1012.gds")
 #snpgdsClose(genofile)
 dissim = snpgdsDiss(genofile,autosome.only = F)
 rownames(dissim$diss)= dissim$sample.id
 colnames(dissim$diss) = dissim$sample.id
-joseph_annotation = xlsx::read.xlsx("/media/theboocock/Data/Dropbox/Postdoc/projects/all_yeast_alignment/align_avaliable_yeast_genomes_2022/full_annotations.xlsx",sheetName="peter2018")
+joseph_annotation = xlsx::read.xlsx("data/joseph/full_annotations.xlsx",sheetName="peter2018")
 joseph_annotation$Clades_trim = (str_trim(joseph_annotation$Clades))
 joseph_annotation$mosaic = grepl("Mosaic",joseph_annotation$Clades)
 m1 = joseph_annotation[joseph_annotation$mosaic,]

@@ -242,7 +242,12 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
     
     enrich_df = get_enrichment(gene_list = g$transcript,background = background)
     #lod_dfs$`out/combined//3004`
-    cell_cycle_causals = region_df %>% join_overlap_inner(cc_lods) %>% as_data_frame()
+    
+    if(!is.null(cc_lods)){
+      cell_cycle_causals = region_df %>% join_overlap_inner(cc_lods) %>% as_data_frame()
+    }else{
+      cell_cycle_causals = NULL 
+    }
     causals_round_robin = region_df%>% join_overlap_inner(causal_hit) %>% as_data_frame()
     assoc_round_robin = region_df %>% join_overlap_inner(qtl) %>% as_data_frame()
     annotation_provean_snps = region_df %>% join_overlap_inner(vcf_annotation) %>% as_data_frame() # %>% write_tsv("candidates.tsv")

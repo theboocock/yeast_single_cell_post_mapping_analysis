@@ -1,12 +1,12 @@
 
 #source("vars.R")
-#source("load_cross_objects.R")
+source("load_cross_objects.R")
 
-dir.create("figures")
-cis_test_1000 = readRDS("../data/bulkEQTL_cis_only_test.RDS")
+#dir.create("figures")
+cis_test_1000 = readRDS("data/bulkEQTL_cis_only_test.RDS")
 cis_test_1000$p_adj = p.adjust(cis_test_1000$p.value,method="fdr")
 sum(cis_test_1000$p_adj < 0.05)
-ap_cis = readRDS("../rproj/out/combined/Ap/geno_cis_comp.RDS")
+ap_cis = readRDS("data/out/combined/Ap/geno_cis_comp.RDS")
 
 ap_cis$prevGenoCis = ap_cis$prevGenoCis %>% mutate(p_adj=p.adjust(p,method = "fdr"))
 ap_cis$hmmGenoCis = ap_cis$hmmGenoCis %>% mutate(p_adj=p.adjust(p,method = "fdr"))
@@ -25,7 +25,7 @@ nrow(ap_combined %>% filter(p_adj.hmm < 0.05))
 #p1 = ggdraw() + draw_image(p1)
 
 
-p1 = ggdraw() + draw_image("../figure_and_tables_paper/Figures/one_pot.png")
+p1 = ggdraw() + draw_image("data/images//one_pot.png")
 
 p3 = one_pot_bulk %>% mutate(single_cell_sig = FDR < 0.05) %>%filter(!is.na(Beta) & !is.na(coefficient)) %>% 
   ggplot(aes(x=Beta,y=coefficient,color=factor(single_cell_sig))) + geom_point(size=1.5) + 

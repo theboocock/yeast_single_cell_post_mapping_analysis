@@ -7,8 +7,8 @@ combined_objects$noise$ASE  %>% group_by(cross,sig_new_filt) %>% summarise(n=n()
 #combined_objects$noise$ASE %>% filter()
 sum(combined_objects$noise$ASE$sig_new_filt,na.rm=T)
 combined_objects$noise$ASE_EMMEANS=  combined_objects$noise$ASE_EMMEANS %>% mutate(theta=log(1/exp(emmean.disp))) 
-big_drop = combined_objects$noise$ASE %>% filter(sig_new_filt) %>% filter(p_adj_disp < 1e-4) %>% filter(estimate.cond*estimate.disp< 0)# %>% ggplot(aes(x=abs(estimate.disp))) + geom_histogram()
-big_drop = big_drop %>% group_by(cross) %>% slice_max(p_adj_disp,n=10)
+big_drop = combined_objects$noise$ASE %>% filter(sig_new_filt)# %>% filter(p_adj_disp < 1e-4) %>% filter(estimate.cond*estimate.disp< 0)# %>% ggplot(aes(x=abs(estimate.disp))) + geom_histogram()
+big_drop = big_drop %>% group_by(cross) %>% slice_max(p_adj_disp,n=10,with_ties = F)
 
 
 #combined_objects$noise$ASE %>% filter(sig_new_filt) %>% filter(p_adj_disp < 1e-3) %>% ggplot(aes(x=abs(estimate.disp))) + geom_histogram()

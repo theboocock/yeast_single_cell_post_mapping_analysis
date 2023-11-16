@@ -146,12 +146,12 @@ for(base_path in names(good.dips)){
 }
 out_df$n_experiments = 1 
 out_df$n_libraries = 1
-out_df$cross_name = c("B","C","A")
-out_df$parent1 = c("YJM145","CBS2888","BY")
-out_df$parent2 = c("YPS163","YJM981","RM")
-out_df$effect_directions = c("-YJM145,+YPS163","-CBS2888,+YJM981","-BY,+RM")
-
-out_df
+out_df$cross_name = c("A","B","C","B","C","A")
+out_df$parent1 = c("BY","YJM145","CBS2888","YJM145","CBS2888","BY")
+out_df$parent2 = c("RM","YPS163","YJM981","YPS163","YJM981","RM")
+out_df$effect_directions = c("-BY,+RM","-YJM145,+YPS163","-CBS2888,+YJM981","-YJM145,+YPS163","-CBS2888,+YJM981","-BY,+RM")
+out_df$type = c("ASE_REP","ASE","ASE","ASE_REP","ASE_REP","ASE")
+#out_df
 #out_df3 = out_df[c(2,3,6),]
 #out_df3
 

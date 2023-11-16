@@ -3,8 +3,8 @@ source("qtl_utils.R")
 source("enrichment_utils.R")
 source("annotation_utils.R")
 source("plot_fx.R")
-cc_dir = normalizePath("../rproj/out/cell_cycle/")
-combined_dir = normalizePath("../rproj/out/combined/")
+cc_dir = normalizePath("data//out/cell_cycle/")
+combined_dir = normalizePath("data//out/combined/")
 
 
 summary_table = read_tsv("tables/s4.csv")
@@ -57,7 +57,7 @@ for(cross in unique(summary_table$cross)){
   }
   if(cross != "Ap"){
     cross_data[[cross]][["cis"]] = load_cis_one_pot(cross)
-    cross_data[[cross]][["trans"]]= load_trans_one_pot(cross)
+    #cross_data[[cross]][["trans"]]= load_trans_one_pot(cross)
     
     
     # Get HAPLOIDS
@@ -146,7 +146,7 @@ for(cross in c("A","B","3004")){
   
 }
 
-combined_objects$noise$ASE  = combined_objects$noise$ASE %>% mutate(sig_new_filt = (p_adj_ase > .05 | (combined_objects$noise$ASE$estimate.cond*combined_objects$noise$ASE$estimate.disp < 0)) & p_adj_disp < .05)# %>%
+combined_objects$noise$ASE  = combined_objects$noise$ASE %>% mutate(sig_new_filt = ( combined_objects$noise$ASE$estimate.cond*combined_objects$noise$ASE$estimate.disp < 0) & p_adj_disp < .05)# %>%
 combined_objects$noise$ASE_EMMEANS = combined_objects$noise$ASE_EMMEANS  %>% mutate(cross2  = case_when(
   cross == "3004" ~ "CBS2888 (red) x YJM981 (purple)",
   cross == "B" ~ "YJM145 (red) x YPS163 (purple)",
