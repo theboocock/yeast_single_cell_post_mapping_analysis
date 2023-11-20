@@ -1,7 +1,9 @@
-source("plate_reader_utils.R")
-conditions = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/gal_final_github_october/data/plate_reader/mutants_final_freezer_gal/gal_mutants_glu_feb2019_conditions.csv"
-gpa_validation_folder = "/media/theboocock/Data/Dropbox/Postdoc/projects/gpa_validation/"
-glue("{gpa_validation_folder}/")
+source("pipeline/plate_reader_utils.R")
+conditions = "data/plate_reader/gal_mutants_glu_feb2019_conditions.csv"
+#gpa_validation_folder = "/media/theboocock/Data/Dropbox/Postdoc/projects/gpa_validation/"
+
+gpa_validation_folder = "data/plate_reader/gpa_validation"
+#glue("{gpa_validation_folder}/")
 
 
 add_labels_laura_strains2 = function(ypd_growth){
@@ -33,13 +35,13 @@ add_labels_laura_strains = function(ypd_growth){
 
 
 
-samples1 = glue("{gpa_validation_folder}/data/plate_leslie_july23/samples.csv")
+samples1 = glue("{gpa_validation_folder}/plate_leslie_july23/samples.csv")
 #mutant_pheno=  "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/gal_final_github_october/ext/data/gal_mutant_pheno_nov.csv" 
 
-plate1 = glue("{gpa_validation_folder}data/plate_leslie_july23/072423_Plate1.csv")
-plate2 = glue("{gpa_validation_folder}data/plate_leslie_july23/072423_Plate2.csv")
-plate3 = glue("{gpa_validation_folder}data/plate_leslie_july28/plate1.csv")
-plate4 = glue("{gpa_validation_folder}data/plate_leslie_july28/plate2.csv")
+plate1 = glue("{gpa_validation_folder}/plate_leslie_july23/072423_Plate1.csv")
+plate2 = glue("{gpa_validation_folder}/plate_leslie_july23/072423_Plate2.csv")
+plate3 = glue("{gpa_validation_folder}/plate_leslie_july28/plate1.csv")
+plate4 = glue("{gpa_validation_folder}/plate_leslie_july28/plate2.csv")
 
 ypd_growth1 = add_labels_laura_strains2(process_phenotype_plates(plate1, conditions, samples1))
 ypd_growth2 = add_labels_laura_strains2(process_phenotype_plates(plate2, conditions, samples1))
@@ -49,11 +51,11 @@ ypd_growth4 = add_labels_laura_strains2(process_phenotype_plates(plate4, conditi
 
 
 
-samples2= glue("{gpa_validation_folder}data/lwm_samples.csv")
+samples2= glue("{gpa_validation_folder}/lwm_samples.csv")
 
-plate5 = glue("{gpa_validation_folder}data/ypd_1_13.csv")
-plate6 = glue("{gpa_validation_folder}data/ypd_1_18.csv")
-plate7 = glue("{gpa_validation_folder}data/ypd_1_23_lidonly.csv")
+plate5 = glue("{gpa_validation_folder}/ypd_1_13.csv")
+plate6 = glue("{gpa_validation_folder}/ypd_1_18.csv")
+plate7 = glue("{gpa_validation_folder}/ypd_1_23_lidonly.csv")
 
 
 ypd_growth5 = add_labels_laura_strains(process_phenotype_plates(plate5, conditions, samples2))

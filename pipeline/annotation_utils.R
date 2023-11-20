@@ -1,20 +1,18 @@
 # Load annotaiton matrix 
 
 
-in_dir = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/data/"
+#in_dir = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/data/"
 
-causal_hits = read.csv(glue("{in_dir}/bloom_causal_variant_mapping.csv"), header=T)
+causal_hits = read.csv(glue("data/bloom_causal_variant_mapping.csv"), header=T)
 #causal_hits = causal_hits %>% filter(shared.parent %in% c("YJM981x","CBS2888a"))
-qtl_bloom = read.csv(glue("{in_dir}/qtl_bloom.csv"))
+qtl_bloom = read.csv(glue("data/qtl_bloom.csv"))
 pos_l = as.numeric(unlist(lapply(str_split(qtl_bloom$X1.5.LOD.drop.CI..left,"_"), function(x){x[2]})))
 pos_r = as.numeric(unlist(lapply(str_split(qtl_bloom$X1.5.LOD.drop.CI..right,"_"), function(x){x[2]})))
 qtl_bloom$pos_l = pos_l
 qtl_bloom$pos_r =  pos_r
 qtl_bloom = qtl_bloom %>% mutate(seqnames=chr,start=pos_l,end=pos_r) %>% as_granges()
-vcf_annotation_16 = read_tsv("/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/data/vcf/scripts/all_no_filt.txt",col_names=F) 
+vcf_annotation_16 = read_tsv("data/vcf/all_no_filt.txt",col_names=F) 
 colnames(vcf_annotation_16) = c("chrom","pos","ref","alt","ref_strains","missing_strains","alt_strains","af","mutation")
-
-
 split_annotation = str_split(vcf_annotation_16$mutation,"\\|")
 #change  = lapply(split_annotation, function(x){x[11]})
 #change = unlist(lapply(str_split(change, "\\."), function(x){x[2]}))
@@ -26,7 +24,7 @@ split_annotation = str_split(vcf_annotation_16$mutation,"\\|")
 
 #a(change)
 
-b  = "YKL198C"
+#b  = "YKL198C"
 
 #gene= unlist(lapply(split_annotation, function(x){x[5]}))
 
@@ -58,7 +56,7 @@ b  = "YKL198C"
 #meltedProveanScores$lookup=paste0(meltedProveanScores$gene, ':', meltedProveanScores$POS, ':', meltedProveanScores$ALT)
 
 
-vcf_in = readRDS(glue("{in_dir}/provean/1002codingEffects.RDS"))
+vcf_in = readRDS(glue("data/provean/1002codingEffects.RDS"))
 #vcf_in = readRDS("../data/provean/1002codingEffects.RDS")
 
 vcf_in$chrom = as.vector(seqnames(vcf_in$X))
@@ -95,8 +93,6 @@ vcf_annotation_16 = vcf_annotation_16 %>% mutate(seqnames=chrom,start=pos,end=po
 
 ### Load_all_annotations #### 
 ### 3004 #### 
-
-
 
 skip_binding_sites = T
 if(!skip_binding_sites){

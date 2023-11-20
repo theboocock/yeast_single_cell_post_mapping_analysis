@@ -1,6 +1,6 @@
 
 ## Load in data for TopGo
-gff_in= rtracklayer::import.gff("/media/theboocock/Data/Dropbox/PHDTHESIS/Single-CellRNASEQ/eqtls/ref_data/yeast/gffs/saccharomyces_cerevisiae.gff")
+gff_in= rtracklayer::import.gff("data/saccharomyces_cerevisiae.gff")
 gff_in = gff_in %>% filter(type == "gene")
 gene_ontologies = apply(as.data.frame(gff_in),1, function(x){x$Ontology_term})
 names(gene_ontologies) = gff_in$Name
