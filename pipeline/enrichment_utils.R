@@ -86,9 +86,10 @@ wquantile.generic <- function(x, probs, cdf.gen, weights = NA) {
 }
 
 
-hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lod_df_beta, cell_cycle_beta_df2,segdata,fdr_fx,background,out_name=NULL){
+hotspot_enrichment_and_function = function(cross,hotspot_peaks_n,combined_peaks,lod_df_beta, cell_cycle_beta_df2,segdata,fdr_fx,background,out_name=NULL){
   #print(folder)
   #cross = basename(folder)
+  hotspot_peaks = hotspot_peaks_n
   peaks = hotspot_peaks %>% dplyr::filter(cell_cycle_stage == "combined") %>% filter(in.hotspot)  %>% dplyr::group_by(bin) %>% dplyr::summarise(n=dplyr::n()) %>% arrange(-n)
   sig_hotspot = qpois(1-(.05/nrow(peaks)),ceiling(mean(peaks$n))) + 1
   
@@ -150,6 +151,8 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
   hotspot_pos = round((as.numeric(unlist(lapply(str_split_2,function(x){x[1]}))) +  as.numeric(unlist(lapply(str_split_2,function(x){x[2]}))))/2)
   hotspot_peaks_tmp$hotspot_pos = hotspot_pos
   #hotspot_out_all_confidence_interval = data.frame()
+  hotspot = unique(hotspot_peaks_tmp$bin)[1]
+  
   for(hotspot in unique(hotspot_peaks_tmp$bin)){
     #print(hotspot)
     tmp_df = hotspot_peaks_tmp[hotspot_peaks_tmp$bin == hotspot,]
@@ -224,7 +227,7 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
     #snp_ids_in_pheno = paste(chrom_snps,pos_snps,sep="_")
     #snp_ids2 = paste(g$chrom[1], g$pos[1],sep="_")
     #cc_lods = lod_dfs[[cross]]
-    dd = data.frame()
+    #dd = data.frame()
     
     out_cc = cell_cycle_beta_df2[which(cell_cycle_beta_df2$marker == g$peak.marker[1]),]
     
@@ -304,7 +307,7 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks,combined_peaks,lo
       local_eqtls = data.frame(DATA="NONE")
     }
     hotspot_str_list = c(hotspot_str_list, hotspot_str)
-    annotation_list[[j]]=list(cell_cycle_causals=cell_cycle_causals,cell_cycle_assoc=dd,causals_round_robin=causals_round_robin,
+    annotation_list[[j]]=list(cell_cycle_causals=cell_cycle_causals,cell_cycle_assoc=out_cc,causals_round_robin=causals_round_robin,
                                     assoc_round_robin=assoc_round_robin, complete_assoc=df_qtl, provean_snps = as.data.frame(annotation_provean_snps),
                                     GO=enrich_df$out_mf_bp, KEGG=enrich_df$kegg,GO_raw=enrich_df$out_mf_bp_raw,directional_hotspot_distal=peak_merged,
                                    directional_hotspot_local=local_eqtls,genes_in_region=ab,eqtl_region=region_df)

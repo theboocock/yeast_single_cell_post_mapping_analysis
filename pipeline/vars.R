@@ -13,8 +13,8 @@ as.numeric(nums)
 
 #ames(cList)[c(9,10)]
 
-load("/media/theboocock/Data/Dropbox/PHDTHESIS/projects/gal_reproducible_final/reproduce_gal/data/rrv2/seg.recoded.RData")
-load("/media/theboocock/Data/Dropbox/PHDTHESIS/projects/gal_reproducible_final/reproduce_gal/data/rrv2/extracted_average_phenotypes.RData")
+load("data/rr/seg.recoded.RData")
+load("data/rr/extracted_average_phenotypes.RData")
 
 cList=list(
   '01_2444_44_1-2'='B',
@@ -95,4 +95,4 @@ chrom_lengths_plot$tchrom_short_f = convert_chrom_to_simple_factor(chrom_lengths
 chrom_lengths_plot$chrom_short_f = convert_chrom_to_simple_factor(chrom_lengths_plot$chrom)
 
 
-source("load_cc.R")
+source("pipeline/load_cc.R")

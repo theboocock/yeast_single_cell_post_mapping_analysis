@@ -1,8 +1,8 @@
-source("packages.R")
-source("qtl_utils.R")
-source("enrichment_utils.R")
-source("annotation_utils.R")
-source("plot_fx.R")
+source("pipeline/packages.R")
+source("pipeline/qtl_utils.R")
+source("pipeline/enrichment_utils.R")
+source("pipeline/annotation_utils.R")
+source("pipeline/plot_fx.R")
 cc_dir = normalizePath("data//out/cell_cycle/")
 combined_dir = normalizePath("data//out/combined/")
 
@@ -14,9 +14,9 @@ cross_data= list()
 #i = 1
 plot=F
 
-source("cis_objects.R")
-source("trans_objects.R")
-source("vars.R")
+source("pipeline/cis_objects.R")
+source("pipeline/trans_objects.R")
+source("pipeline/vars.R")
 
 #library(foreach)
 #cl <- parallel::makeForkCluster(4)
@@ -57,7 +57,7 @@ for(cross in unique(summary_table$cross)){
   }
   if(cross != "Ap"){
     cross_data[[cross]][["cis"]] = load_cis_one_pot(cross)
-    #cross_data[[cross]][["trans"]]= load_trans_one_pot(cross)
+    cross_data[[cross]][["trans"]]= load_trans_one_pot(cross)
     
     
     # Get HAPLOIDS

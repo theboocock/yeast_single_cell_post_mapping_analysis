@@ -1,4 +1,3 @@
-source("qtl_utils.R")
 process_hotspot_and_combined = function(hotspot_peaks, combined_peaks){
   hotspot_peaks= bind_rows(hotspot_peaks,.id = "cell_cycle_stage")
   hotspot_peaks= hotspot_peaks %>% dplyr::filter(cell_cycle_stage == "combined")
