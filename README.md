@@ -18,3 +18,5 @@ see [raw_data](raw_data_processing/extract_parents_and_vatrix_hoff.sh) for the r
 ------------------
 
 see [drivelink](drivelink.com) for the genotype and gene expression matrices, and the cell meta-data for each experiment in a simple format.
+
+see [R_dependencies](R_dependencies.csv) for the R version and list of packages used for this analysis
