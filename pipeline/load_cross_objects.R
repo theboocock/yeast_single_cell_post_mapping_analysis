@@ -6,46 +6,15 @@ source("pipeline/plot_fx.R")
 cc_dir = normalizePath("data//out/cell_cycle/")
 combined_dir = normalizePath("data//out/combined/")
 
-
 summary_table = read_tsv("tables/s4.csv")
 dir.create("figure_drafts")
 fig.dir = "figure_drafts"
 cross_data= list()
-#i = 1
 plot=F
 
 source("pipeline/cis_objects.R")
 source("pipeline/trans_objects.R")
 source("pipeline/vars.R")
-
-#library(foreach)
-#cl <- parallel::makeForkCluster(4)
-#doParallel::registerDoParallel(cl)
-
-#ret_cross =foreach(cross = unique(summary_table$cross),.combine="c") %dopar% {
-  #print(cross)
-  #cross_tmp = list()
-  #if(cross == "Ap"){
-  #  return(cross_tmp)
-  #}
-#  if(cross != "Ap"){
-#    cross_tmp[["cis"]] = load_cis_one_pot(cross)
-#    cross_tmp[["trans"]]= load_trans_one_pot(cross)
-    
-    # Get HAPLOIDS
-    ###
-#    if(cross == "A"){
-#      ## Do the comparsions ##
-#    }
-    
-    
-    # GET DIPLOIDS
-    
-    
-#  }
-#  return(cross_tmp)
-#}
-
 #A (BY-, RM+) # TODO: 
 #3004 (CBS-, YJM981+)
 #B (YJM145-, YPS163+
@@ -58,28 +27,16 @@ for(cross in unique(summary_table$cross)){
   if(cross != "Ap"){
     cross_data[[cross]][["cis"]] = load_cis_one_pot(cross)
     cross_data[[cross]][["trans"]]= load_trans_one_pot(cross)
-    
-    
-    # Get HAPLOIDS
-    ###
     if(cross == "A"){
-      ## Do the comparsions ##
     }
-    
-    
-    # GET DIPLOIDS
-    
-    
   }
-  #break
-  #i = 1
 }
 ##### GET THE BULK STUFF ######
-source("load_by_rm_bulk.R")
-source("load_single_cell_gpa1.R")
+source("pipeline/load_by_rm_bulk.R")
+source("pipeline/load_single_cell_gpa1.R")
 # TODO don't load things that take ages to compute just load the objects and break them out.
-source("load_gpa1_phenotype_and_mating_data.R")
-source("load_gpa1_phylogenetic_data.R")
+source("pipeline/load_gpa1_phenotype_and_mating_data.R")
+source("pipeline/load_gpa1_phylogenetic_data.R")
 
 combined_objects = list()
 combined_objects[["noise"]] = list()
@@ -98,17 +55,9 @@ for(cross in c("A","B","3004")){
   cis_ase_only = cross_data[[cross]]$cis$ASE$ase_cis %>% mutate(cross = !!cross)
   
   cis_ase = cross_data[[cross]]$cis$ASE$ase_noise %>% mutate(cross = !!cross)
-  #cis_ase_only_m
-  #cor(cis_ase$estimate,cis_ase_only$estimate)
+  
   cis_ase_only_m = left_join(cis_ase_only,cis,by=c("gene"="transcript","cross"))
   cis_noise_m  = inner_join(cis,cis_ase,by=c("transcript"="gene","cross")) 
-  print(nrow(cis_ase_only_m))
-  ### Probably flip these ###
- # if (cross %in% c("3004","B")){
-  #  cis_noise_m$Beta = -cis_noise_m$Beta
-    #cis_ase_only$estimate = -cis_ase_only$estimate
-  #}
-  
   
   ccl = cross_data[[cross]]$trans$cell_cycle_lods %>% as_data_frame()
   combined_objects[["cell_cycle_lods"]] = rbind(combined_objects[["cell_cycle_lods"]],ccl)
@@ -129,6 +78,19 @@ for(cross in c("A","B","3004")){
   
   #print(table(merged_with_cis_noise$cross.ASE))
   combined_objects[["noise"]][["NOISE_CIS_M"]]=rbind(combined_objects[["noise"]][["NOISE_CIS_M"]],merged_with_cis_noise)
+  
+  if(with_ase_rep){
+    
+    
+    #merged_with_cis_noise = cis %>% full_join(n2,by=c("transcript"="gene"),suffix=c(".CIS",".ASE"))
+    
+    n1 = cross_data[[cross]]$cis$ASE$ase_noise %>% mutate(cross = !!cross)
+    n2 = cross_data[[cross]]$cis$ASE_REP$ase_noise %>% mutate(cross = !!cross)
+    n3 = full_join(n1,n2,by="gene",suffix=c(".ASE",".ASE_REP"))
+    
+    combined_objects[["noise"]][["NOISE_WITH_REP"]] = rbind(combined_objects[["noise"]][["NOISE_WITH_REP"]],n3)
+  }
+  
   combined_objects[["noise"]][["ASE"]] = rbind(combined_objects[["noise"]][["ASE"]],n1)
   #combined_objects[["noise"]][["ASE_REP"]] = rbind(combined_objects[["noise"]][["ASE_REP"]],n2)
   #combined_objects[["noise"]][["ASE_M"]]= rbind(combined_objects[["noise"]][["ASE_M"]],n1_rep_m)
@@ -145,8 +107,15 @@ for(cross in c("A","B","3004")){
   #cross_data$A$cis$ASE$geno_mean_disp
   
 }
+sim1 = readRDS("data/out/nbASE_sim_neg3.RDS")
+sim2 = readRDS("data/out/nbASE_sim_negp7.RDS")
 
-combined_objects$noise$ASE  = combined_objects$noise$ASE %>% mutate(sig_new_filt = ( combined_objects$noise$ASE$estimate.cond*combined_objects$noise$ASE$estimate.disp < 0) & p_adj_disp < .05)# %>%
+neg_bin_sims=list(sim1=sim1,sim2=sim2)
+
+
+combined_objects$noise$ASE  = combined_objects$noise$ASE %>% mutate(sig_new_filt =  (  combined_objects$noise$ASE$p_adj_ase > 0.05 | combined_objects$noise$ASE$estimate.cond*combined_objects$noise$ASE$estimate.disp < 0) & p_adj_disp < 0.05)# & p_adj_disp < 1e-3)# %>%
+combined_objects$noise$ASE  = combined_objects$noise$ASE %>% mutate(theta=log(1/exp(estimate.disp)))
+combined_objects$noise$ASE_EMMEANS=  combined_objects$noise$ASE_EMMEANS %>% mutate(theta=log(1/exp(emmean.disp))) 
 combined_objects$noise$ASE_EMMEANS = combined_objects$noise$ASE_EMMEANS  %>% mutate(cross2  = case_when(
   cross == "3004" ~ "CBS2888 (red) x YJM981 (purple)",
   cross == "B" ~ "YJM145 (red) x YPS163 (purple)",
@@ -164,6 +133,8 @@ combined_objects$cis_eqtl_ase_only_with_onepot = combined_objects$cis_eqtl_ase_o
   cross == "B" ~ "YJM145 x YPS163 (B)",
   cross == "A" ~ "BY x RM (A)"
 ))
+combined_objects$noise$NOISE_WITH_REP  = combined_objects$noise$NOISE_WITH_REP %>% mutate(theta.ASE=log(1/exp(estimate.disp.ASE))) %>%  mutate(theta.ASE_REP=log(1/exp(estimate.disp.ASE_REP)))
+
 
 #combined_objects[["trans_maps"]] = rbind(hotspot_peaksA,hotspot_peaksB,hotspot_peaks3004)
 

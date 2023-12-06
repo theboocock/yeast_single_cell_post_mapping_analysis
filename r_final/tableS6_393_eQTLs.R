@@ -1,4 +1,4 @@
-ap_cis = readRDS("../rproj/out/combined/Ap/geno_cis_comp.RDS")
+ap_cis = readRDS("data/out/combined/Ap/geno_cis_comp.RDS")
 ap_cis$prevGenoCis = ap_cis$prevGenoCis %>% mutate(p_adj=p.adjust(p,method = "fdr"))
 ap_cis$hmmGenoCis = ap_cis$hmmGenoCis %>% mutate(p_adj=p.adjust(p,method = "fdr"))
 ap_combined = ap_cis$prevGenoCis %>% inner_join(ap_cis$hmmGenoCis,by=c("gene"),suffix=c(".old",".hmm"))

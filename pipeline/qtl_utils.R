@@ -24,6 +24,9 @@ make_cc_lod_traces = function(cell_cycle_df){
     theme_classic() + theme(axis.text.x = element_text(angle = 75, vjust = 0.5, hjust=1))
 }
 
+
+#convert_cc_c
+
 convert_chrom_to_simple_factor = function(chrom,reverse=F){
   new_chrom = str_replace_all(chrom,"chr","")
   order_levels = c("I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI")

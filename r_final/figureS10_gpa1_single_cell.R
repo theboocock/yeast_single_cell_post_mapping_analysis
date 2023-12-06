@@ -19,4 +19,5 @@ p3 = df_gpa1 %>% ggplot(aes(y=freq,x=cell_cycle2))+ geom_point(stat="identity") 
   theme_bw() + theme(text=element_text(size=24))
 
 plot_grid(p1,p2,p3,ncol=3,label_size = 24, labels=c("A","B","C"))
-ggsave("fig_final/s8.png",width=16,height=12)
+ggsave("fig_final/s10.png",width=16,dpi=300,height=12)
+ggsave("fig_final/svg/s10.svg",width=16,dpi=300,height=12)

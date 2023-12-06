@@ -1,22 +1,16 @@
-combined_objects$noise$ASE = combined_objects$noise$ASE %>% inner_join(genes_name_trans,by=c("gene"="gene_id"))
+#out_noise_tmp = combined_objects$noise$ASE %>% inner_join(genes_name_trans,by=c("gene"="gene_id"))
 
-out_noise = combined_objects$noise$ASE %>% dplyr::select(gene,gene_name,estimate.cond,p.value.cond,p_adj_ase,estimate.disp,p.value.disp,p_adj_disp)
-# flip the dispersion estimate # 
-out_noise$estimate.disp = out_noise$estimate.disp
+out_noise = pred_df5 %>% dplyr::select(gene.x,gene_name,estimate.cond,p.value.cond,p_adj_ase,theta,p.value.disp,p_adj_disp,good_disp)  %>% mutate(good_disp=!good_disp)#
+#%>% ggplot(aes(y=mean_shift,x=estimate.cond)) + geom_point()
 
-#col_s_out 
+#out_noise = out_noise_tmp %>% dplyr::select(gene,gene_name,estimate.cond,p.value.cond,p_adj_ase,estimate.disp,p.value.disp,p_adj_disp)
 col_s_out = c("transcript","gene name","estimate (average expression)","p-value (average expression)","adjusted p-value (average expression)",
-              "estimate (dispersion)","p-value (dispersion)","adjusted p-value (dispersion)")
+              "estimate (noise)","p-value (dispersion)","adjusted p-value (dispersion)","Overlaps global trend line")
 colnames(out_noise)  = col_s_out
-openxlsx::write.xlsx(out_noise,file="tables/s10.xlsx")
+c_l = split(out_noise,pred_df5$cross.x)
+names(c_l) = c("C","A","B")
+c_l = c_l[c("A","B","C")]
+#col_s_out 
 
-
-combined_objects$noise$ASE[combined_objects$noise$ASE$sig_new_filt,] %>% group_by(cross) %>% summarise(n=n()) #%>% filter(gene_name == "HSP12")
-
-
-combined_objects$noise$AScombined_objects$noise$ASE$estimate.disp
-
-
-
-combined_objects$noise$ASE_EMMEANS
+openxlsx::write.xlsx(c_l,file="tables/s10.xlsx")
 

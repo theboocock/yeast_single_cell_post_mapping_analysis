@@ -157,6 +157,10 @@ load_trans_one_pot = function(cross){
   
   
   
+  cross_data_l$cell_cycle_beta_all$cell_cycle_f = convert_cell_cycle_to_simple_factor(cross_data_l$cell_cycle_beta_all$cell_cycle)
+  cross_data_l$cell_cycle_lods$cell_cycle_f = convert_cell_cycle_to_simple_factor(cross_data_l$cell_cycle_lods$cell_cycle)
+  
+  
   hotspot_bins_final = enrich_list$hotspot_list %>% group_by(bin,hotspot_pos,chrom) %>% summarise(n=n())
   
   hotspot_bins_final$chrom = unlist(lapply(str_split(hotspot_bins_final$bin,":"), function(x){x[1]}))
@@ -175,9 +179,7 @@ load_trans_one_pot = function(cross){
   cross_data_l[["hotspot_enrichments_and_overlaps"]] = enrich_list$annotation_list
   #ret$hotspot_peaks
   #hotspot_table_cc = makeBinTable_hotspot_cc(enrich_list$hotspot_list,cbin50k)
-  
-  in_base_dir="/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/cell_cycle/"
-  
+  in_base_dir = "data/out/cell_cycle/"
   cross_data_l[["seurat_objects_cc"]] = list()
   for(idxs in sets[[cross]]){
     print(idxs)

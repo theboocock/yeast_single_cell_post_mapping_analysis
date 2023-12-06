@@ -62,32 +62,46 @@ ypd_growth5 = add_labels_laura_strains(process_phenotype_plates(plate5, conditio
 ypd_growth6 = add_labels_laura_strains(process_phenotype_plates(plate6, conditions, samples2))
 ypd_growth7 = add_labels_laura_strains(process_phenotype_plates(plate7, conditions, samples2))
 
-plate5 = ypd_growth5$df %>% dplyr::select(ind2,values, doubling) %>%  dplyr::rename(ID=ind2)
+plate5 = ypd_growth5$df %>% filter(values > 0.07 & values < 0.085) %>% dplyr::select(ind2,values, doubling) %>%  dplyr::rename(ID=ind2)
 plate5$plate = "Laura 1_13_23"
 plate6 = ypd_growth6$df %>% dplyr::select(ind2,values, doubling)%>%  dplyr::rename(ID=ind2)
 plate6$plate = "Laura 1_18_23"
-plate7 = ypd_growth7$df %>% dplyr::select(ind2,values, doubling)%>%  dplyr::rename(ID=ind2)
+plate7 = ypd_growth7$df %>% filter(values > 0.07 & values < 0.085)%>% dplyr::select(ind2,values, doubling)%>%  dplyr::rename(ID=ind2)
 plate7$plate= "Laura 1_23_23"
-plate1 = ypd_growth1$df  %>% filter(values < 0.085 & values > 0.07)%>% dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
+plate1 = ypd_growth1$df %>% filter(values > 0.07 & values < 0.085) %>% dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
 plate1$plate = "Leslie 1 7_26_23"
-plate2 =  ypd_growth2$df %>% filter(values < 0.085 & values > 0.07)%>% dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
+plate2 =  ypd_growth2$df %>% filter(values > 0.07 & values < 0.085) %>%  dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
 plate2$plate = "Leslie 2 7_26_23"
-plate3 = ypd_growth3$df%>% filter(values < 0.085 & values > 0.07) %>%dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
+plate3 = ypd_growth3$df%>%  filter(values > 0.07 & values < 0.085) %>% dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
 plate3$plate = "Leslie 1 7_28_23"
-plate4 = ypd_growth4$df%>% filter(values < 0.085 & values > 0.07)%>% dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
+plate4 = ypd_growth4$df%>%  filter(values > 0.07 & values < 0.085) %>% dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
 plate4$plate = "Leslie 2 7_28_23"
-#plate4
+
+
+#plate5 = ypd_growth5$df  %>% dplyr::select(ind2,values, doubling) %>%  dplyr::rename(ID=ind2)
+#plate5$plate = "Laura 1_13_23"
+#plate6 = ypd_growth6$df %>% dplyr::select(ind2,values, doubling)%>%  dplyr::rename(ID=ind2)
+#plate6$plate = "Laura 1_18_23"
+#plate7 = ypd_growth7$df %>% dplyr::select(ind2,values, doubling)%>%  dplyr::rename(ID=ind2)
+#plate7$plate= "Laura 1_23_23"
+#plate1 = ypd_growth1$df %>% dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
+#plate1$plate = "Leslie 1 7_26_23"
+#plate2 =  ypd_growth2$df %>%  dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
+#plate2$plate = "Leslie 2 7_26_23"
+#plate3 = ypd_growth3$df%>%  dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
+#plate3$plate = "Leslie 1 7_28_23"
+#plate4 = ypd_growth4$df%>% dplyr::select(ind2,values,doubling) %>% dplyr::rename(ID=ind2)
+#plate4$plate = "Leslie 2 7_28_23"
+
+
 
 p_m = rbind(plate1,plate2,plate3,plate4,plate5,plate6,plate7) #%>% ggplot(aes(y=))
 p_m = p_m %>% filter(ID != "469I 82R")
 m_resid = residuals(lm((p_m$doubling) ~ p_m$plate))
 p_m$resid = m_resid + 0.4519579
 
-#mycomparsions = c("WT","W82R")
 p_m$strain_new = factor(p_m$ID, levels=c("WT","82R","469I"))
-
 #mycomparsions = list(c("WT","82R"),c("82R","469I"),c("WT","469I"))#
-
 #pa = p_m %>% mutate(plate_l = grepl("Les",plate)) %>% 
 #  ggplot(aes(y=resid,x=strain_new)) + geom_boxplot() + geom_jitter(width=0.2) + theme_bw() + ylab("Doublings per hour") + xlab("Strain")  + theme(text=element_text(size=18)) +
 #  stat_compare_means(comparisons = mycomparsions,method="t.test",size=8) 

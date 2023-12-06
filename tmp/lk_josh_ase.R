@@ -27,7 +27,7 @@ df2 = df2 %>% mutate(gene_cross=paste(gene, cross, sep="_"))
 df2 = df2 %>% mutate(is_sig_disp = ifelse(gene_cross %in% sig_simple_df$gene_cross,T,F)) %>% 
   mutate(is_sig_ase = ifelse(gene_cross %in% sig_simple_df2$gene_cross,T,F))
 
-df2 %>% ggplot(aes(x=mean_shift,y=disp_shit,color=is_sig)) + geom_point(alpha=0.5) + facet_wrap(~cross) + scale_color_manual(values=c("grey50","red"))# + scale_color_brewer(alpha=0.5)
+#df2 %>% ggplot(aes(x=mean_shift,y=disp_shit,color=is_sig)) + geom_point(alpha=0.5) + facet_wrap(~cross) + scale_color_manual(values=c("grey50","red"))# + scale_color_brewer(alpha=0.5)
 
 
 p1 = df2  %>% filter(is_sig_ase) %>% ggplot(aes(x=mean_shift,y=disp_shit)) + geom_point()  + ylab("ln(dispersion) delta") + xlab("ln(expression) delta") #+  stat_smooth(level=.99,method="lm") + 
@@ -52,7 +52,7 @@ library(lmtest)
 library(modelr)
 library(broom)
 
-df3 = df2  %>% filter(is_sig_disp)
+df3 = df2  %>% filter(is_sig_disp | is_sig_ase)
 m1 = lm(disp_shit ~ mean_shift ,data=df3)
 
 pred_df_raw = predict(m1,newdata=df3,interval="confidence")
@@ -71,6 +71,9 @@ pred_df3 %>% ggplot(aes(y=fit,x=mean_shift)) + geom_ribbon(aes(ymin=lwr,ymax=upr
 df3 = df3 %>% mutate(low_mean=mean_shift - 1.96 * se_mean, high_mean = mean_shift - 1.96 * se_mean, low_disp=disp_shit - 1.96 * se_disp,high_disp=disp_shit + 1.96 * se_disp)
 
 
+pred_df3 %>% ggplot(aes(y=fit,x=mean_shift)) + geom_ribbon(aes(ymin=lwr,ymax=upr),fill="grey70") + geom_line()  + 
+  geom_line(aes(y=fit,x=mean_shift),data=pred_df3)
+
 pred_df4 = cbind(pred_df,df3)
 
 
@@ -86,7 +89,7 @@ for(i in 1:nrow(pred_df4)){
   #disp_lwr
   good = F
   if(is.na(disp_lwr) | is.na(disp_upr)){
-    good = F
+    good = F/pred
   }
   else if(disp_lwr >  upr){
     good = T
@@ -98,6 +101,9 @@ for(i in 1:nrow(pred_df4)){
 }
 #install.packages("olsrr")
 library(olsrr)
+
+
+
 
 pred_df4$resid = residuals(m1)
 hist(residuals(m1),breaks=10)
@@ -116,7 +122,7 @@ plot(residuals(m1))
 #pred_df4
 
 o#ls_plot_resid_qq(m1)
-
+sum(pred_df5$good_disp)
 
 pred_df4 = pred_df4 %>% mutate(label=ifelse(gene == "YMR303C",paste(gene,cross,sep="_"),NA))
 pred_df3  %>% mutate(label=ifelse(gene == "YFL014W",paste(gene,cross,sep="_"),NA)) %>% ggplot(aes(y=fit,x=mean_shift)) + geom_ribbon(aes(ymin=lwr,ymax=upr),fill="grey70") + geom_line()  + 
@@ -377,7 +383,7 @@ exp(8.21)
 aa = nbin.model.resultsM=left_join(cross_data$A$cis$ASE$ase_noise_nbin1 %>% filter(term=='genoB' & component=='cond'),
                               cross_data$A$cis$ASE$ase_noise_nbin1 %>% filter(term=='genoB' & component=='disp'), by='gene', suffix=c('.cond', '.disp'))
 
-(aa %>% mutate(p_adj_disp = p.adjust(p.value.disp,method="BH")) %>% filter(p_adj_disp < 0.05)) %>% ggplot(aes(y=estimate.disp/estimate.cond,x=estimate.cond)) + geom_point() + stat_cor()
+(aa %>% mutate(p_adj_disp = p.adjust(p.value.disp,method="BH")) %>% filter(p_adj_disp < 0.05)) %>% ggplot(aes(y=estimate.disp,x=estimate.cond)) + geom_point() + stat_cor()
 
 
 

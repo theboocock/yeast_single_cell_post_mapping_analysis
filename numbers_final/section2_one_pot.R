@@ -8,6 +8,7 @@ sum(one_pot_bulk$FDR < 0.05,na.rm=T)
 717/1031
 sum(one_pot_bulk$FDR < 0.05 &
       one_pot_bulk$Beta * one_pot_bulk$coefficient > 0 &one_pot_bulk$p_adj < 0.05,na.rm=T )
+
 sum(one_pot_bulk$FDR < 0.05 & one_pot_bulk$Beta * one_pot_bulk$coefficient > 0,na.rm=T)
 825/1031
 #We mapped 1,562 distal eQTLs at an FDR of 5% (Figure 2A; Table S8).
@@ -24,6 +25,10 @@ m_hotspots= A_hot %>% join_overlap_left(A_old_hot)
 m_hotspots_old = A_old_hot %>% join_overlap_left(A_hot)
 m_hotspots[!is.na(m_hotspots$bin.y),]
 m_hotspots[is.na(m_hotspots$bin.y),]
+
+m_hotspots_old[is.na(m_hotspots_old$hotspot_pos.y)]
+
+# New hotspots
 
 
 # We took advantage of the convenience of one-pot eQTL mapping and applied it to two additional yeast crosses, one between a clinical 

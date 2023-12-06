@@ -3,6 +3,9 @@ Ap	4995	7124	1513.5	1091	NA	NA	/media/theboocock/Data/Dropbox/PHDTHESIS/projects
 A	5435	27744	4017	1093	1987	0.07161908881199539	/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/combined/A	eQTL	1	2	A	BY	RM	-BY,+RM
 B	5556	44784	2130	661	675	0.01507234726688103	/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/combined/B	eQTL	2	4	B	YJM145	YPS163	-YJM145,+YPS163
 3004	4696	6595	1982	904	0	0	/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/combined/3004	eQTL	1	2	C	CBS2888	YJM981	-CBS2888,+YJM981
+A	2685	3653	2221	1431	NA	NA	/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/13_Group1_diploids_3004_2444_3051_7point5K_Feb_21	ASE_REP	1	1	A	BY	RM	-BY,+RM
 B	3531	2864	2479.5	1543	NA	NA	/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/13_Group1_diploids_3004_2444_3051_7point5K_Feb_21	ASE	1	1	B	YJM145	YPS163	-YJM145,+YPS163
 3004	4983	5219	6559	3284	NA	NA	/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/13_Group1_diploids_3004_2444_3051_7point5K_Feb_21	ASE	1	1	C	CBS2888	YJM981	-CBS2888,+YJM981
+B	2062	3086	826	714	NA	NA	/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/14_GP1_3004_3051_274_375_May10	ASE_REP	1	1	B	YJM145	YPS163	-YJM145,+YPS163
+3004	4017	7874	1278	942	NA	NA	/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/14_GP1_3004_3051_274_375_May10	ASE_REP	1	1	C	CBS2888	YJM981	-CBS2888,+YJM981
 A	2662	5890	1605	372	NA	NA	/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/18_3051_May10	ASE	1	1	A	BY	RM	-BY,+RM

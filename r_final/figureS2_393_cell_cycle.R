@@ -1,5 +1,5 @@
-rds = readRDS("../rproj/out/cell_cycle/00_BYxRM_480MatA_1/cell_cycle_final.RDS")
-rds2 = readRDS("../rproj/out/cell_cycle/00_BYxRM_480MatA_2//cell_cycle_final.RDS")
+rds = readRDS("data/out/cell_cycle/00_BYxRM_480MatA_1/cell_cycle_final.RDS")
+rds2 = readRDS("data/out//cell_cycle/00_BYxRM_480MatA_2//cell_cycle_final.RDS")
 
 
 pcc = DimPlot(rds$cc_seurat,group.by ="cell_cycle",label = T,label.size = 18,pt.size = 2) + 
@@ -32,6 +32,6 @@ pf2 = plot_grid(plotlist = pf,ncol=4)
 #df$cc
 #t="identity")
 
-plot_grid(pcc_hist +ggtitle("Single-cell run 1"),pcc_hist2,pcc,pcc2,labels=c("A","B","C","D"))
+plot_grid(pcc_hist +ggtitle("Single-cell run 1"),pcc_hist2,pcc,pcc2,labels=c("A","B","C","D"),label_size = 16)
 ggsave("fig_final//s2_cc_overview.png",bg="white",width=16,height=12,dpi=300)
-
+ggsave("fig_final/svg/s2_cc_overview.svg",bg="white",width=16,height=12,dpi=300)

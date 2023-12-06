@@ -71,6 +71,8 @@ alts = str_split(str_remove_all(str_remove_all(str_remove_all(vcf_annotation_16$
 snp_count = unlist(lapply(alts, function(x){sum(x!="")}))
 alts_without_spaces = (lapply(alts, function(x){x[x!=""]}))
 vcf_annotation_16$n_alleles = snp_count
+
+ab  =  (lapply(alts_without_spaces, function(x){paste(x,collapse = "_",sep="")}))
 vcf_annotation_16$alts = (lapply(alts_without_spaces, function(x){paste(x,collapse = "_",sep="")}))
 #vcf_annotation_16$snpid
 vcf_in$strand = as.character(strand(vcf_in$X))

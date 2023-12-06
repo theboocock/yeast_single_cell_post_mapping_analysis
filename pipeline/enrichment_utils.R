@@ -192,8 +192,8 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks_n,combined_peaks,
     
     #print(idx_one)
     #print(idx_two)
-    ##left = idx_one - 2
-    #right = idx_two + 2
+    left = left - 2
+    right = right + 2
     #left  = which(chrom == g$chrom[1] & pos == g$CI.l[1]) -2
     #right =  which(chrom == g$chrom[1] & pos == g$CI.l[1]) + 2
     

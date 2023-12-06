@@ -1,6 +1,6 @@
 
 #source("vars.R")
-source("load_cross_objects.R")
+#source("pipeline/load_cross_objects.R")
 
 #dir.create("figures")
 cis_test_1000 = readRDS("data/bulkEQTL_cis_only_test.RDS")
@@ -37,8 +37,8 @@ rds = readRDS("../rproj/out/cell_cycle/00_BYxRM_480MatA_1/cell_cycle_final.RDS")
 p2 = DimPlot(rds$cc_seurat, group.by="cell_cycle",label = T,label.size = 12,pt.size = 2) + theme(text=element_text(size=18)) + ggtitle("") + scale_color_brewer(palette = "Set2") + theme(legend.position = "none")
 pg = plot_grid(p2,p3,labels=c("B","C"),label_size = 18)
 plot_grid(p1,pg,labels=c("A",""),nrow=2,rel_heights = c(1,2))
-ggsave("fig_final//figure1.png",bg="white",dpi=300,width=16,height=12)
-ggsave("fig_final//figure1.svg",bg="white",dpi=300,width=16,height=12)
+ggsave("fig_final/main/staging//figure1.png",bg="white",dpi=300,width=16,height=12)
+ggsave("fig_final/main/staging/figure1.svg",bg="white",dpi=300,width=16,height=12)
 
 #### Figure 1, done #####
 

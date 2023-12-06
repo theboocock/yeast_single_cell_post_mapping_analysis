@@ -1,4 +1,3 @@
-source("plot_fx.R")
 pcompare = ap_cis$hmmGenoCis %>% mutate(single_cell_sig = p_adj < 0.05) %>% 
   inner_join(ap_cis$prevGenoCis,by=c("gene")) %>% ggplot(aes(y=beta.y,x=beta.x,color=single_cell_sig)) + 
   geom_point(size=1.5) +
@@ -118,11 +117,21 @@ pb = plot_grid(plot1,plot2,nrow=2,align = "v")
 pa = make_hotspot_map(cross_data$A$trans$combined_peaks,title = "") + xlab("")
 plot_grid(pa,plot1,plot2,align="v",axis="tblr",nrow=3,rel_heights = c(2,.4,.4))
 
+#ggsave()
+
+#2/2.8
+
+#16 * .7
+
+#ggsave("p.png")
+
+#ggsave("figures/figure2_bulk_maps2.png",width=16,height=16*1.4,dpi=300)
+
 #plot_grid(pa,(plot1/plot2),rel_heights = c(2,1),nrow=2,align="hv")
 #(pa)/((plot1 )/(plot2)) + plot_layout(heights=c(2,.5))
 
-ggsave("i/figure2_bulk_maps.svg",width=16,height=12)
-ggsave("figures/figure2_bulk_maps.png",width=16,height=12)
+ggsave("fig_final/main/staging//figure2_bulk_maps.svg",width=11.2,height=16)
+ggsave("fig_final/main/staging//figure2_bulk_maps.png",width=16,height=12)
 
 #p4 / (pcompare+p3) + plot_annotation(tag_levels = "A") + plot_layout(height=c(1,2))
 #ggsave("figures/figure1.png")

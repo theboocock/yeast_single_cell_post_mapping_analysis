@@ -1,6 +1,15 @@
 #We captured a median of 1,514 unique RNA molecules (unique molecular identifiers; henceforth UMIs) 
 #and a median of 1,091 expressed SNPs per cell (Table S4).
 summary_table[1,]
+
+
+###  We classified individual haploid yeast cells into five different cell cycle stages (M/G1, G1, G1/S, S, G2/M) via unsupervised clustering of the expression of 
+#787 cell-cycle-regulated genes (Spellman et al. 1998) in combination with 22 cell-cycle-informative marker genes (Figures 1B, S2 and S3).
+
+nrow(cell_cycle_df)
+
+nrow(anno)
+
 #Using this classification approach, we found that expression of 2,139 genes displayed
 #significant variation by cell cycle stage (likelihood ratio test, false-discovery rate FDR < 0.05; Table S5). 
 sum(ap_icc$CC.q < 0.05,na.rm=T)

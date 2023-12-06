@@ -16,5 +16,5 @@ cor(C$estimate,C$Beta,method="spearman")
 
 
 ggsave("fig_final//s7.png",bg="white", dpi=300, height=12,width=16)
-ggsave("fig_final//s7.svg", bg="white", dpi=300, height=12, width=16)
+ggsave("fig_final/svg//s7.svg", bg="white", dpi=300, height=12, width=16)
 

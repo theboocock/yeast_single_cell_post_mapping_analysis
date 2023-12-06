@@ -1,5 +1,4 @@
-combined_objects$noise$ASE  = combined_objects$noise$ASE %>% mutate(sig_new_filt =  (  combined_objects$noise$ASE$p_adj_ase > 0.05 | combined_objects$noise$ASE$estimate.cond*combined_objects$noise$ASE$estimate.disp < 0) & p_adj_disp < 0.05)# & p_adj_disp < 1e-3)# %>%
-combined_objects$noise$ASE_EMMEANS=  combined_objects$noise$ASE_EMMEANS %>% mutate(theta=log(1/exp(emmean.disp))) 
+
 big_drop = combined_objects$noise$ASE %>% filter(sig_new_filt)# %>% filter(p_adj_disp < 1e-4) %>% filter(estimate.cond*estimate.disp< 0)# %>% ggplot(aes(x=abs(estimate.disp))) + geom_histogram()
 
 sum(combined_objects$noise$ASE$p_adj_disp < 0.05,na.rm=T)
@@ -42,3 +41,6 @@ combined_objects$noise$ASE_EMMEANS %>%  ggplot(aes(y=theta,x=emmean.mean)) + geo
   facet_wrap(~cross2) + theme_classic()  + theme(text=element_text(size=18)) + xlab(expression(ln*"(expression)")) + ylab(expression(ln(dispersion))) + coord_cartesian(ylim=c(-3,5),xlim=c(-5.5,5))
 #ggsave("figure_fin  3.png",width=16,height=12)
 ggsave("fig_final//4.svg",width=16,height=12)
+
+
+cor(combined_objects$noise$ASE_EMMEANS$theta,combined_objects$noise$ASE_EMMEANS$emmean.mean,method="spearman")

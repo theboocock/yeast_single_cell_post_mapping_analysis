@@ -18,7 +18,8 @@ norm_diploid = function(cc_diploid){
 }
 
 load_cis_one_pot= function(cross){
-  sc_eqtl_row = summary_table %>% filter(cross == !!cross) %>% filter(type== "sceQTL")
+  #sc_eqtl_row = summary_table %>% filter(cross == !!cross) %>% filter(type== "sceQTL")
+  #print(sc_eqtl_row)
   cross_data_l = list()
   # Seurat objects
   cross_data_l[["one_pot_seurat"]] = list()

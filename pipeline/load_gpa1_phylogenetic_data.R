@@ -15,6 +15,8 @@ mid = phangorn::midpoint(tree)
 pos = read.gdsn(index.gdsn(genofile,"snp.position"))
 chrom =  read.gdsn(index.gdsn(genofile,"snp.chromosome"))
 allele =  read.gdsn(index.gdsn(genofile,"snp.allele"))
+#sample_id =  read.gdsn(index.gdsn(genofile,"sample.id"))
+
 #Gpa1
 idx = which(chrom == "VIII" & pos == "114674")
 gt =  read.gdsn(index.gdsn(genofile,"genotype"))

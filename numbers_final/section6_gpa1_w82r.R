@@ -2,10 +2,13 @@
 nrow(cross_data$B$trans$hotspot_enrichments_and_overlaps$`chrVIII:46887-140660_51`$directional_hotspot_distal)
 # binomial test
 
+#
+table(gpa_c@meta.data$gpa1)
 #  We observed that for 36 of the 50 genes affected by the hotspot and detected in our single-cell validation dataset, the sign of the expression difference was consistent between 
 #the eQTL effect and the W82R validation experiment (binomial test, p=0.0026; Table S12). I
 sum(bl$Beta.y * bl$avg_log2FC < 0,na.rm=T)
 binom.test(x=36,n=50)
+
 
 #  Importantly, the gene expression difference in the W82R experiment was statistically significant and concordant with the eQTL effect for all
 #6 mating-related genes affected by this hotspot (AGA1, AGA2, MFA1, STE2, FUS3, PRM5), 
@@ -68,11 +71,17 @@ aaaa = emmeans(mm,spec=~strain_new)
 aaaa
 pairs(aaaa)
 
+aaaa = aaaa %>% as_data_frame()
+
+aaaa$emmean[2]
+
+aaaa$emmean[3]
+
+aaaa$emmean[2]/aaaa$emmean[3]
 #
 #
 # he 82R allele is common (20.5%) (Figure 5
 sum(het_df$gpa)/(nrow(het_df) * 2)
-
 het_df %>% group_by(Clades_trim) %>% summarise(gpa_freq=sum(gpa)/(2*n())) %>% arrange(-gpa_freq)
 
 # Peter et al. identified four groups of mosaic strains, which are characterized by admixture of two or more different lineages through outbreeding, and we observed that the 82R allele 
@@ -86,7 +95,6 @@ idx_all = which(idx_all)
 tmp_gt2 = gt3[,idx]
 len =  sum(!is.na(tmp_gt2[idx_mosaic]))
 mosaic_prop= sum(tmp_gt2[idx_mosaic],na.rm=T)/(len * 2 )
-mosaic_prop
 
 props = c()
 set.seed(1)
@@ -96,9 +104,44 @@ for(idx2 in sample(idx_all,size=1e4,replace = T)){
   len =  sum(!is.na(tmp_gt2[idx_mosaic]))
   mosaic_prop2 = sum(tmp_gt2[idx_mosaic],na.rm=T)/(len * 2 )
   #mosaic_prop2= ifelse(mosaic_prop2 > 0.5,1-mosaic_prop2,mosaic_prop2)
+  #print(mosaic_prop2)
   props = c(props, mosaic_prop2)
 }
 sum(mosaic_prop <= props)/10000
+
+
+
+
+
+#idx_all = (maf < maf[idx] + .02 & maf > maf[idx] -0.02)
+#idx_all[idx] =F
+#idx_all = which(idx_all)
+
+#ccc = het_df %>% filter(Ploidy == 2) %>% filter(Aneuploidies == "euploid")
+#colnames(gt2)
+#idx_mosaic2 = which(rownames(dissim$diss) %in% m1standardized_name2)
+#idx_good= which(dissim$sample.id %in% ccc$Standardized.name)
+#tmp_gt2 = gt3[idx_good,idx]
+#new_strain_ids = dissim$sample.id[dissim$sample.id %in% ccc$Standardized.name]
+#idx_mosaic2  = which(new_strain_ids %in% m1$Standardized.name)
+#
+#length(tmp_gt2)
+#len =  sum(!is.na(tmp_gt2[idx_mosaic2]))
+#mosaic_prop= sum(tmp_gt2[idx_mosaic2],na.rm=T)/(len * 2 )
+#mosaic_prop
+
+#props = c()
+#set.seed(1)
+#for(idx2 in sample(idx_all,size=1e4,replace = T)){
+#  tmp_gt2 = gt3[idx_good,idx2]
+  #i  
+#  len =  sum(!is.na(tmp_gt2[idx_mosaic2]))
+#  mosaic_prop2 = sum(tmp_gt2[idx_mosaic2],na.rm=T)/(len * 2 )
+#  print(mosaic_prop2)
+  #mosaic_prop2= ifelse(mosaic_prop2 > 0.5,1-mosaic_prop2,mosaic_prop2)
+#  props = c(props, mosaic_prop2)
+#}
+#sum(mosaic_prop <= props)/10000
 
 # 0.0068
 
@@ -110,8 +153,11 @@ ccc = het_df %>% filter(gpa != 1) %>% filter(Ploidy != 1)
 fisher.test(table(ccc$gpa,ccc$Zygosity))
 1/.300996
 summary(lm(ccc$het_sites_prop ~ ccc$gpa))
-
 wilcox.test(ccc$het_sites_prop ~ ccc$gpa)
+
+#ccc = het_df %>% filter(gpa != 1) %>% filter(Ploidy == 2) %>% filter(Aneuploidies == "euploid")
+#fisher.test(table(ccc$gpa,ccc$Zygosity))
+#summary(lm(ccc$het_sites_prop ~ ccc$gpa))
 
 ### Allele-frequencies in the paper
 ## /media/theboocock/scratch/vcf_tmp ##

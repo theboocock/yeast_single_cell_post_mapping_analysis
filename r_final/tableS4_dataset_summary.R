@@ -4,10 +4,10 @@
 
 ###
 library(Matrix)
-ginformative_rds = readRDS("../rproj/out/combined/ginformative.RDS")
+ginformative_rds = readRDS("data/out/combined/ginformative.RDS")
 
-folders = list.dirs("../rproj/out/combined/", full.names=T)
-base.dir = "../rproj/out/combined/"
+folders = list.dirs("data//out/combined/", full.names=T)
+base.dir = "data/out/combined/"
 crosses = c("Ap","A","B","3004")
 folders = paste(base.dir,crosses,sep="")
 
@@ -96,7 +96,7 @@ for (folder in folders){
 out_df$type = "eQTL"
 
 
-base_dir = "../rproj/out/"
+base_dir = "data/out/"
 num_experiments = c(1,1,2,1)
 num_libraries = c(2,2,4,2)
 ## update fraction no unique
@@ -144,13 +144,25 @@ for(base_path in names(good.dips)){
   }
   #paste0(folder,"/",)
 }
+
+
+if(length(names(good.dips))==2){
 out_df$n_experiments = 1 
 out_df$n_libraries = 1
-out_df$cross_name = c("A","B","C","B","C","A")
-out_df$parent1 = c("BY","YJM145","CBS2888","YJM145","CBS2888","BY")
-out_df$parent2 = c("RM","YPS163","YJM981","YPS163","YJM981","RM")
-out_df$effect_directions = c("-BY,+RM","-YJM145,+YPS163","-CBS2888,+YJM981","-YJM145,+YPS163","-CBS2888,+YJM981","-BY,+RM")
-out_df$type = c("ASE_REP","ASE","ASE","ASE_REP","ASE_REP","ASE")
+out_df$cross_name = c("B","C","A")
+out_df$parent1 = c("YJM145","CBS2888","BY")
+out_df$parent2 = c("YPS163","YJM981","RM")
+out_df$effect_directions = c("-YJM145,+YPS163","-CBS2888,+YJM981","-BY,+RM")
+out_df$type = c("ASE","ASE","ASE")
+}else{
+  out_df$n_experiments = 1 
+  out_df$n_libraries = 1
+  out_df$cross_name = c("A","B","C","B","C","A")
+  out_df$parent1 = c("BY","YJM145","CBS2888","YJM145","CBS2888","BY")
+  out_df$parent2 = c("RM","YPS163","YJM981","YPS163","YJM981","RM")
+  out_df$effect_directions = c("-BY,+RM","-YJM145,+YPS163","-CBS2888,+YJM981","-YJM145,+YPS163","-CBS2888,+YJM981","-BY,+RM")
+  out_df$type = c("ASE_REP","ASE","ASE","ASE_REP","ASE_REP","ASE")
+}
 #out_df
 #out_df3 = out_df[c(2,3,6),]
 #out_df3
