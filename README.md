@@ -1,7 +1,7 @@
 # Scripts for "Single-cell eQTL mapping in yeast reveals a tradeoff between growth and reproduction" 
-## This repository also contains the code that recreates the figures, tables, performs trans-eQTL hotspot analysis, cell-cycle stage assignment, raw data processing, and additional links to generated data.
+## This repository also contains the code and data to recreate the figures, tables, performs trans-eQTL hotspot analysis, cell-cycle stage assignment, raw data processing, and additional links to generated data.
 
-Raw data folder for the post analysis scripts are located [here](https://drive.google.com/drive/folders/1SAUYxO7EhUq-FQLzrc__Lm_0dVF06oIj?usp=drive_link)
+Raw data folder for the post analysis scripts are located [here](https://drive.google.com/drive/folders/1SAUYxO7EhUq-FQLzrc__Lm_0dVF06oIj?usp=drive_link).
 
 sequencing data for each single-cell experiment is available on the SRA [PRJNA](http://ncbi.com)
 
