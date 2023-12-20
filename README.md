@@ -19,6 +19,6 @@ see [pre_processing_repository](https://github.com/joshsbloom/single_cell_eQTL/t
 
 ------------------
 
-see [drivelink]([drivelink.com](https://drive.google.com/drive/folders/1k9Gfg0GbuEuRVPXx5Y8WC-ZXbuWwgP5Q?usp=sharing)) for the genotype and gene expression matrices, and the cell meta-data for each experiment in a simple format.
+see [drivelink](https://drive.google.com/drive/folders/1k9Gfg0GbuEuRVPXx5Y8WC-ZXbuWwgP5Q?usp=sharing) for the genotype and gene expression matrices, and the cell meta-data for each experiment in a simple format.
 
 see [R_dependencies](R_dependencies.yaml) for the R version and list of packages used for this analysis.
