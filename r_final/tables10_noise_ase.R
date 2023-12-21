@@ -5,7 +5,7 @@ out_noise = pred_df5 %>% dplyr::select(gene.x,gene_name,estimate.cond,p.value.co
 
 #out_noise = out_noise_tmp %>% dplyr::select(gene,gene_name,estimate.cond,p.value.cond,p_adj_ase,estimate.disp,p.value.disp,p_adj_disp)
 col_s_out = c("transcript","gene name","estimate (average expression)","p-value (average expression)","adjusted p-value (average expression)",
-              "estimate (noise)","p-value (dispersion)","adjusted p-value (dispersion)","Overlaps global trend line")
+              "estimate (noise)","p-value (noise)","adjusted p-value (noise)","Overlaps global trend line")
 colnames(out_noise)  = col_s_out
 c_l = split(out_noise,pred_df5$cross.x)
 names(c_l) = c("C","A","B")

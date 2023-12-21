@@ -7,7 +7,6 @@ summary_table[1,]
 #787 cell-cycle-regulated genes (Spellman et al. 1998) in combination with 22 cell-cycle-informative marker genes (Figures 1B, S2 and S3).
 
 nrow(cell_cycle_df)
-
 nrow(anno)
 
 #Using this classification approach, we found that expression of 2,139 genes displayed

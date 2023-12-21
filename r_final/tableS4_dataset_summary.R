@@ -128,7 +128,12 @@ for(base_path in names(good.dips)){
     n_cells = length(bc)
     numi = median(colSums(mat[,bc]))
     nbin = readRDS(paste0(base_dir,"/",base_path,"/bbin_",dip,"_CCmanual.RDS"))
+    
+    #readRDS(paste0(base_dir,"/",base_path,"/ASEData.RDS"))
     ngenes=length(unique(nbin$gene))
+    mat = ase_data$counts %>% as.dgCMatrix.spam()
+    
+    
     #expressed_snps = median(colSums((phased_counts$par1.ASEcounts[bc,] + phased_counts$par2.ASEcounts[bc,]) > 0))
     
     expressed_snps = median(colSums((ase_data$rC[,diploid_assignment$diploid_name == dip] + ase_data$aC[,diploid_assignment$diploid_name == dip]) > 0))

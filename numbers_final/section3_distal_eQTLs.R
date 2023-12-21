@@ -1,7 +1,7 @@
 #We asked whether the effects of eQTLs varied across the different stages of the cell-cycle. Of the 2,945 total local eQTLs detected in the three crosses, only 116 (4%) showed 
 #significant interactions between the eQTL effect and the cell-cycle stage at an FDR of 5%.
 
-combined_objects$cis_table %>% summarise(has_int=sum(FDR < 0.05),n=n())
+combined_objects$cis_table %>% summarise(has_eqtl=sum(FDR < 0.05),n=n())
 combined_objects$cis_table %>% summarise(has_int=sum(has_interaction),n=n())
 116/2945
 

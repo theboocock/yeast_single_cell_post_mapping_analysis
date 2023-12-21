@@ -1,5 +1,6 @@
-combined_objects$cis_eqtl_ase_only_with_onepot %>% filter(!is.na(Beta) & !is.na(estimate)) %>% ggplot(aes(x=Beta,y=estimate,color=FDR < 0.05)) + geom_point() + facet_wrap(~cross2,nrow=3) + theme_bw() + theme(text=element_text(size=24)) +
-  coord_cartesian(ylim=c(-2,2)) +
+combined_objects$cis_eqtl_ase_only_with_onepot %>% filter(!is.na(Beta) & !is.na(estimate)) %>% ggplot(aes(x=Beta,y=estimate,color=FDR < 0.05)) + geom_point() + 
+   facet_wrap(~cross2,nrow=3) + theme_bw() + theme(text=element_text(size=24)) +
+  ylim(c(-2,2))  + xlim(c(-2,2)) + 
   #stat_cor(method = "spearman") +
   geom_vline(xintercept = 0) + geom_hline(yintercept = 0) + xlab("local eQTL effect (one-pot)")  + ylab("allele-specific expression effect (diploid hybrids)") + 
   scale_color_brewer(name="One-pot FDR",labels=c(">= 0.05","< 0.05"),palette ="Dark2") +   
