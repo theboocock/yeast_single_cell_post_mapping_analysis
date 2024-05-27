@@ -45,3 +45,19 @@ cell_cycle_big_df$Peak[cell_cycle_big_df$Peak == "S/G2"] = "G2/M"
 cc_list = list(genes_name_trans=genes_name_trans,cell_cycle_big_df=cell_cycle_big_df,anno=anno)
 #saveRDS(cc_list,"data/cc_list.RDS")
 #saveRDS(gff_in, "data/gff_in.RDS")
+
+haploid_genes = read.csv("data/haploid_genes.csv")
+haploid_genes[!haploid_genes$name %in% genes_name_trans$gene_name,]
+haploid_genes = haploid_genes %>% filter(name != "DPS2") 
+#gene_name
+MF2 = "MF(ALPHA)2"
+MF1 = "MF(ALPHA)1"
+idxs = which(!haploid_genes$name %in% genes_name_trans$gene_name)
+haploid_genes$name[idxs][1] = MF1
+haploid_genes$name[idxs][2] = MF2
+haploid_genes$name[idxs][3] = "AFB1"
+haploid_genes$name[idxs][4] = "MATALPHA2"
+haploid_genes[which(!haploid_genes$name %in% genes_name_trans$gene_name),]
+haploid_genes_df = haploid_genes %>% inner_join(genes_name_trans,by=c("name"="gene_name"))
+#scer_hsg_genes = paste0("SCER-",haploid_genes$name)
+scer_hsg_genes_cell_cycle = scer_hsg_genes[scer_hsg_genes %in% cell_cycle_big_df$NAME2]

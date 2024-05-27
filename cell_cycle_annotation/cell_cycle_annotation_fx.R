@@ -78,7 +78,6 @@ crosses.to.parents=list(
   '3028'=c("CLIB219x", "M22")       #16
 )
 chroms=paste0('chr', as.roman(1:16)) 
-source("load_cc.R")
 read_and_normalize = function(in_seurat,filt_cells,gene_subset=NULL,n_pcs=12){
   expr_obj2= Read10X(in_seurat)
   keep = colnames(expr_obj2) %in% names(filt_cells)[filt_cells]
@@ -140,8 +139,8 @@ diploid_annotation = function(in_seurat,diploid_assignments,in_folder,haploid=F,
   #print(in_seurat)
   expr_obj2= Read10X(in_seurat)
   #print("HEH")
-  keep = diploid_assignments %>% filter(is.na(diploid_assignment_likdiff) | diploid_assignment_likdiff > likelihood_diff_filter) %>% select(barcode)
-  diploid_assignments_filt  = diploid_assignments %>% filter(is.na(diploid_assignment_likdiff)  | diploid_assignment_likdiff > likelihood_diff_filter)
+  keep = diploid_assignments %>% dplyr::filter(is.na(diploid_assignment_likdiff) | diploid_assignment_likdiff > likelihood_diff_filter) %>% dplyr::select(barcode)
+  diploid_assignments_filt  = diploid_assignments %>% dplyr::filter(is.na(diploid_assignment_likdiff)  | diploid_assignment_likdiff > likelihood_diff_filter)
   #keep = colnames(expr_obj2) %in% names(filt_cells)[filt_cells]
   print(head(diploid_assignments_filt))
   expr_obj3 = expr_obj2[,keep$barcode]
@@ -157,7 +156,6 @@ diploid_annotation = function(in_seurat,diploid_assignments,in_folder,haploid=F,
   out_dir = glue("out/cell_cycle/{in_folder}")
   dir.create(out_dir)
   i = 1
-  print("two")
   for(diploid_tmp_name in unique(diploid_assignments_filt$diploid_name)){
     print(diploid_tmp_name)
     out_dir_tmp = glue("{out_dir}/{diploid_tmp_name}")
@@ -200,7 +198,7 @@ diploid_annotation = function(in_seurat,diploid_assignments,in_folder,haploid=F,
     dev.off()
     markers = FindAllMarkers(expr_obj_sctransform)
     if(nrow(markers) != 0){
-      cc2 = markers %>% filter((avg_log2FC) > avg_log2_filt &p_val_adj < p_filt) %>% inner_join(cell_cycle_big_df,by=c("gene"="NAME")) 
+      cc2 = markers %>% dplyr::filter((avg_log2FC) > avg_log2_filt &p_val_adj < p_filt) %>% inner_join(cell_cycle_big_df,by=c("gene"="NAME")) 
     }else{
       cc2 = markers
     }
@@ -236,13 +234,13 @@ diploid_annotation = function(in_seurat,diploid_assignments,in_folder,haploid=F,
 #  in_seurat@cc2 %>% filter(avg_log2FC > avg_log2_filt) %>% 
 #}
 get_cell_cycle_rds= function(name){
-  return(readRDS(glue("out/cell_cycle/{name}/cell_cycle.RDS")))
+  return(readRDS(glue("data/cell_cycle/out/{name}/cell_cycle.RDS")))
 }
 get_all_rds = function(name){
-  return(readRDS(glue("out/cell_cycle/{name}/all_seurat.RDS")))
+  return(readRDS(glue("data/cell_cycle/out/{name}/all_seurat.RDS")))
 }
 get_cell_cycle_annotations= function(name){
-  return(read.csv(glue("out/cell_cycle/{name}/cell_cycle_assignments.csv")))
+  return(read.csv(glue("data/cell_cycle/out/{name}/cell_cycle_assignments.csv")))
 }
 add_cell_cycle_annotation_to_seurat_objects_and_load = function(name){
   cell_cycle_seurat = readRDS(glue("out/cell_cycle/{name}/cell_cycle.RDS"))
@@ -252,8 +250,6 @@ add_cell_cycle_annotation_to_seurat_objects_and_load = function(name){
   all_rds$seurat_obj$cell_cycle_final = cell_cycle$cell_cycle
   return(list(all_seurat=all_rds$seurat_obj,cell_cycle_seurat=cell_cycle_seurat$cc_seurat))
 }
-
-
 make_cc_assignment_plots_and_write_ms= function(cc_list, out_folder ){
   cc_object = cc_list$cc_seurat
   png_one=glue("{out_folder}/side_by_side.png") 
@@ -276,7 +272,6 @@ make_cc_assignment_plots_and_write_ms= function(cc_list, out_folder ){
   dev.off()
   out_cc_rds = glue("{out_folder}/cell_cycle_final.RDS")
   saveRDS(cc_object)
-  
 }
 make_cc_assignment_plots_and_write= function(cc_list, name,folder=NULL){
   cc_object = cc_list$cc_seurat
@@ -311,8 +306,6 @@ make_cc_assignment_plots_and_write= function(cc_list, name,folder=NULL){
   out_cc_rds = glue("{out_dir}cell_cycle_final.RDS")
   print(out_cc_rds)
   saveRDS(cc_list, file=out_cc_rds)
-  
-  
 }
 plot_MFA1 = function(diploid_names,name, folder=NULL){
   if (!is.null(folder)){

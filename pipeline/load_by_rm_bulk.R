@@ -89,11 +89,11 @@ lod_df_beta = cross_data$A$trans$cell_cycle_lods
 cell_cycle_beta_df2 = cross_data$A$trans$cell_cycle_beta_all
 segdata=segdata
 background = names(gene_expr_1000)
-out_name = "A_old"
+out_name = "A_2018"
 
 
 hotspots_bulk = hotspot_enrichment_and_function(cross="A",hotspot_peaks = bulk_hotspots,combined_peaks = cPf,lod_df_beta = cross_data$A$trans$cell_cycle_lods,
-                                                cell_cycle_beta_df2=cross_data$A$trans$cell_cycle_beta_all,segdata = segdata, background = names(gene_expr_1000),fdr_fx = NULL,out_name = "A_old")
+                                                cell_cycle_beta_df2=cross_data$A$trans$cell_cycle_beta_all,segdata = segdata, background = names(gene_expr_1000),fdr_fx = NULL,out_name = out_name) 
 
 
 

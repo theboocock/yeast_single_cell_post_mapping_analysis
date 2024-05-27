@@ -2,7 +2,7 @@ library(SNPRelate)
 library(tidyverse)
 
 #snpgdsVCF2GDS("/media/theboocock/scratch/vcf_tmp/maf_0.01_joseph.vcf.gz","rare.gds",method="biallelic.only")
-genofile2 = snpgdsOpen("rare.gds") # MAF > 0.01 & MAF < 0.04??
+genofile2 = snpgdsOpen("data/rare.gds") # MAF > 0.01 & MAF < 0.04??
 pos2 = read.gdsn(index.gdsn(genofile2,"snp.position"))
 chrom2 =  read.gdsn(index.gdsn(genofile2,"snp.chromosome"))
 allele2 =  read.gdsn(index.gdsn(genofile2,"snp.allele"))
@@ -31,8 +31,8 @@ joseph_annotation$Geographical.origins
 colnames(joseph_annotation)
 m1 = joseph_annotation[grep("Mosaic",joseph_annotation$Clades),]
 m1$standardized_name2
-by_var  = data.frame(sample=rownames(dissim$diss),gt=gt_by) %>%
-  inner_join(joseph_annotation,by=c("sample"="standardized_name2"))
+by_var  = data.frame(sample=rownames(dissim$diss),gt=gt_by)# %>%
+ # inner_join(joseph_annotation,by=c("sample"="standardized_name2"))
 
 by_var %>% group_by(Clades) %>% summarise(gt_freq=sum(gt)/(2*n()),n=n())  %>% ggplot(aes(y=Clades,x=gt_freq)) +
   geom_bar(stat="identity")

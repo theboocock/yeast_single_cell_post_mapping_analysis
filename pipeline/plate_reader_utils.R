@@ -1,12 +1,6 @@
 ## 
 
-library(platetools)
-library(magrittr)
-library(ggplot2)
-library(dplyr)
-library(reshape2)
-library(tidyverse)
-library(segmented)
+
 read_plate = function(plate, layout,random=F){
   plate_in = read.csv(plate, header=T)
   

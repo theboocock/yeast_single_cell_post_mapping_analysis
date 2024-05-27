@@ -35,3 +35,7 @@ pf2 = plot_grid(plotlist = pf,ncol=4)
 plot_grid(pcc_hist +ggtitle("Single-cell run 1"),pcc_hist2,pcc,pcc2,labels=c("A","B","C","D"),label_size = 16)
 ggsave("fig_final//s2_cc_overview.png",bg="white",width=16,height=12,dpi=300)
 ggsave("fig_final/svg/s2_cc_overview.svg",bg="white",width=16,height=12,dpi=300)
+
+
+
+### Figure S2 in review ### #

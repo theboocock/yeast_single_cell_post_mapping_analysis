@@ -108,7 +108,7 @@ p_m$strain_new = factor(p_m$ID, levels=c("WT","82R","469I"))
 #list(pairs_m=p_m,)
 #m1 = (lm((p_m$doubling) ~ p_m$ID + p_m$plate))
 
-library(emmeans)
+#library(emmeans)
 #em = emmeans::emmeans(m1,specs=~ID)
 #pairs(em)
 #p#ypd_growth1$

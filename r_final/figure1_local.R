@@ -34,7 +34,12 @@ p3 = one_pot_bulk %>% mutate(single_cell_sig = FDR < 0.05) %>%filter(!is.na(Beta
   ylim(c(-1,1))  + xlim(c(-1,1))  +  scale_color_manual(name="One-pot FDR",labels=c(">= 0.05","< 0.05"),values=c("#e6ab02","#1b9e77")) +
   guides(color = guide_legend(override.aes = list(size = 8)))#guides(override.aes = aes(label = ""))
 rds = readRDS("../rproj/out/cell_cycle/00_BYxRM_480MatA_1/cell_cycle_final.RDS")
-p2 = DimPlot(rds$cc_seurat, group.by="cell_cycle",label = T,label.size = 12,pt.size = 2) + theme(text=element_text(size=18)) + ggtitle("") + scale_color_brewer(palette = "Set2") + theme(legend.position = "none")
+p2 = DimPlot(rds$cc_seurat, group.by="cell_cycle",label = T,label.size = 12,pt.size = 2,reduction="pca") + theme(text=element_text(size=18)) + ggtitle("") + scale_color_brewer(palette = "Set2") + theme(legend.position = "none")
+
+DimPlot(rds$cc_seurat, group.by="cell_cycle",label = T,label.size = 12,pt.size = 2,reduction="umap")
+
+
+
 pg = plot_grid(p2,p3,labels=c("B","C"),label_size = 18)
 plot_grid(p1,pg,labels=c("A",""),nrow=2,rel_heights = c(1,2))
 ggsave("fig_final/main/staging//figure1.png",bg="white",dpi=300,width=16,height=12)
