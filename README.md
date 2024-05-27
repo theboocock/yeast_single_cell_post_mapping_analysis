@@ -3,7 +3,7 @@
 
 Raw data folder for the post analysis scripts are located [here](https://drive.google.com/drive/folders/1SAUYxO7EhUq-FQLzrc__Lm_0dVF06oIj?usp=drive_link).
 
-sequencing data for each single-cell experiment is available on the SRA [PRJNA1049497]([http://ncbi.com](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1049497)).
+sequencing data for each single-cell experiment is available on the SRA [PRJNA1049497](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1049497).
 
 see [load_all_data](load_all_data.R) for the main post analysis script that generates the figures and tables, and performs the trans-eQTL hotspot analysis.
 
