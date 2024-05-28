@@ -13,6 +13,10 @@ see [cell_cycle_annotation.R](cell_cycle_annotation/cell_cycle_annotation.R) for
 
 -----------------
 
+see [numbers_final](https://github.com/theboocock/yeast_single_cell_post_analysis/tree/main/numbers_final) for scripts that generate all the numbers found in the maintext.
+
+----
+
 see [raw_data](raw_data_processing/extract_parents_and_vatrix_hoff.sh) for the raw data processing script.
 
 see [pre_processing_repository](https://github.com/joshsbloom/single_cell_eQTL/tree/master/yeast/code) to access the code used to run the HMM and eQTL mapping analysis.
