@@ -6,7 +6,12 @@ data/*
 *gds
 .R*
 1012.gds
+out/fine_mapping/*/*
+out/cell_cycle/*
 out/*
+out/fine_mapping.tar.gz
 .Rproj.user
 tables/*
 fig_final/*
+.fr-VindKl/*
+!out/fine_mapping/README.md

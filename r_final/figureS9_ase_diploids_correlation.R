@@ -16,6 +16,6 @@ cor(C$estimate,C$Beta,method="spearman")
 #combined_objects$cis_eqtl_ase_noise %>% 
 
 
-ggsave("fig_final//s7.png",bg="white", dpi=300, height=12,width=16)
-ggsave("fig_final/svg//s7.svg", bg="white", dpi=300, height=12, width=16)
+ggsave("fig_final//s9.png",bg="white", dpi=300, height=12,width=16)
+ggsave("fig_final/svg//s9.svg", bg="white", dpi=300, height=12, width=16)
 

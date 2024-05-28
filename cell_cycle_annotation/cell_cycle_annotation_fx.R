@@ -135,7 +135,7 @@ n_pcs=12
 resolution=0.3
 likelihood_diff_filter=200
 
-diploid_annotation = function(in_seurat,diploid_assignments,in_folder,haploid=F,avg_log2_filt=0.2,p_filt=0.05,n_pcs=12,resolution=0.3,likelihood_diff_filter=200){
+diploid_annotation = function(in_seurat,diploid_assignments,out_folder,haploid=F,avg_log2_filt=0.2,p_filt=0.05,n_pcs=12,resolution=0.3,likelihood_diff_filter=200){
   #print(in_seurat)
   expr_obj2= Read10X(in_seurat)
   #print("HEH")
@@ -153,7 +153,7 @@ diploid_annotation = function(in_seurat,diploid_assignments,in_folder,haploid=F,
   # # # # # # # #
   seurat_objects = list()
   plots = list()
-  out_dir = glue("out/cell_cycle/{in_folder}")
+  out_dir = glue("{out_folder}")
   dir.create(out_dir)
   i = 1
   for(diploid_tmp_name in unique(diploid_assignments_filt$diploid_name)){

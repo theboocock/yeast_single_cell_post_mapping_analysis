@@ -24,7 +24,7 @@ cor(em_subset$theta,em_subset$emmean.mean,method="spearman")
 plot_grid(p3,p2,labels =c("A","B"), label_size = 18,rel_widths = c(.7,1))#,rel_widths = c(0.7,1))
 
 
-ggsave("fig_final/svg/s9.svg",width=16,height=12)
-ggsave("fig_final/s9.png",dpi=300,width=16,height=12,device=png)
+ggsave("fig_final/svg/s11.svg",width=16,height=12)
+ggsave("fig_final/s11.png",dpi=300,width=16,height=12,device=png)
 # 142 rows removed out of 
 # + stat_cor(method="spearman")                                   

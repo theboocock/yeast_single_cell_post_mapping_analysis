@@ -6,21 +6,30 @@ process_hotspot_and_combined = function(hotspot_peaks, combined_peaks){
   pos_string_l = unlist(lapply(str_split(pos_string,"-"), function(x){x[1]}))
   hotspot_peaks$bin_pos_l = factor(as.numeric(pos_string_l))
   
-  combined_peaks = combined_peaks %>% mutate(
-    Z_G1 = Beta_G1/SE_G1,
-    `Z_G2:M` = `Beta_G2:M`/`SE_G2:M`,
-    `Z_M:G1` = `Beta_M:G1`/`SE_M:G1`,
-    `Z_G1:S` = `Beta_G1:S`/`SE_G1:S`,
-    `Z_S` = Beta_S /SE_S
-  )
+  #combined_peaks = combined_peaks %>% mutate(
+  #  Z_G1 = Beta_G1/SE_G1,
+  #  `Z_G2:M` = `Beta_G2:M`/`SE_G2:M`,
+  #  `Z_M:G1` = `Beta_M:G1`/`SE_M:G1`,
+  #  `Z_G1:S` = `Beta_G1:S`/`SE_G1:S`,
+  #  `Z_S` = Beta_S /SE_S
+  #)
   # Add betas to hotspot peaks #
   x_beta= hotspot_peaks %>% pivot_longer(cols=starts_with("Beta_"),values_to = "beta")# %>% group_by(transcript,peak.marker) %>% summarise(Beta=get_theta(value))
   x_se = hotspot_peaks %>% pivot_longer(cols=starts_with("SE_", ), values_to = "se")
   x_beta$se = x_se$se
   x_b2 = x_beta %>% group_by(chrom,transcript,peak.marker) %>% summarise(Beta=get_theta(beta,se),SE=get_theta(se,se))
+  
+  
+  combined_beta = combined_peaks %>% pivot_longer(cols=starts_with("Beta_"),values_to ="beta")
+  combined_se= combined_peaks %>% pivot_longer(cols=starts_with("SE_"),values_to ="se")
+  combined_beta$se = combined_se$se
+  c_b2 = combined_beta %>% group_by(chrom,transcript,peak.marker) %>% summarise(Beta=get_theta(beta,se),SE=get_theta(se,se))
+  
+  combined_peaks = combined_peaks %>% inner_join(c_b2,by=c("chrom","transcript","peak.marker")) 
+  
   #hotspot_peaks$Beta = x_b2$Beta
   #hotspot_peaks$SE = x_b2$SE 
-  hotspot_peaks = hotspot_peaks %>% inner_join(x_b2,by=c("chrom","transcript","peak.marker"))
+  hotspot_peaks = hotspot_peaks %>% filter(-Beta.x,-Beta.y) %>% inner_join(x_b2,by=c("chrom","transcript","peak.marker"))
   hotspot_peaks$chrom_short = str_replace_all(hotspot_peaks$chr,"chr","")
   hotspot_peaks$tchrom_short = str_replace_all(hotspot_peaks$tchr,"chr","")
   combined_peaks$chrom_short = str_replace_all(combined_peaks$chr,"chr","")
@@ -138,10 +147,10 @@ load_trans_one_pot = function(cross){
   fdr_fx = readRDS(glue("{in_combined_dir}/fdrfx_NB_combined.RDS"))
   #hotspot_table_cc  %>% filter(int_count > fwer_threshcc) 
   background = colnames(segdata$Yr)
-  
-  #cross = cross
-  #hotspot_peaks = hotspot_peaks_n
-  #combined_peaks = ret$combined_peaks
+
+  cross = cross
+  hotspot_peaks = hotspot_peaks_n
+  combined_peaks = ret$combined_peaks
   
     
   

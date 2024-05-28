@@ -149,5 +149,8 @@ B_hot = cross_data$B$trans$hotspot_bins_final# %>% filter(count > cross_data$B$t
 C_hot = cross_data$`3004`$trans$hotspot_bins_final#
 A_old_hot = cross_data$A_bulk$trans$hotspot_bins_final# %>% filter(count > cross_data$A_bulk$trans$hotspot_threshold) %>% mutate(seqnames=chr,start=pos,width=1) %>% as_granges()
 
+rds = readRDS("data/out/cell_cycle/00_BYxRM_480MatA_1/cell_cycle_final.RDS")
+rds2 = readRDS("data/out//cell_cycle/00_BYxRM_480MatA_2//cell_cycle_final.RDS")
+
 
 

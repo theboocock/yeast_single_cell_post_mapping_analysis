@@ -256,14 +256,20 @@ hotspot_enrichment_and_function = function(cross,hotspot_peaks_n,combined_peaks,
     annotation_provean_snps = region_df %>% join_overlap_inner(vcf_annotation) %>% as_data_frame() # %>% write_tsv("candidates.tsv")
     no_transcripts = nrow(g)
     #out_file = glue("out/fine_mapping/{cross}_{hotspot}_{no_transcripts}_finemapping.xlsx")
-    if(!is.null(out_name)){
+    if(cross == "3004"){
+      out_name = "C"
+      dir.create(glue("out/fine_mapping/{out_name}"),recursive = T)
+      out_file = glue("out/fine_mapping/{out_name}/{hotspot}_{no_transcripts}_finemapping.xlsx")
+    }else{
+      if(!is.null(out_name)){
       dir.create(glue("out/fine_mapping/{out_name}"),recursive = T)
       out_file = glue("out/fine_mapping/{out_name}/{hotspot}_{no_transcripts}_finemapping.xlsx")
       #print(out_file)
-    }else{
+      }else{
       dir.create(glue("out/fine_mapping/{cross}"),recursive = T)
       out_file = glue("out/fine_mapping/{cross}/{hotspot}_{no_transcripts}_finemapping.xlsx")
       #print(out_file)
+      }
     }
     hotspot_str = glue("{hotspot}_{no_transcripts}")
     if(nrow(cell_cycle_causals) == 0){

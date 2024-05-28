@@ -158,6 +158,6 @@ for(j in 1:nrow(input_files)){
   diploid_assignments = readRDS(glue("{out_folder}/{diploid_assignments}"))
   in_seurat = glue("{out_folder}/")
   diploid_assignments = diploid_assignments
-  in_folder = in_folder 
-  diploid_annotation(in_seurat = glue("{out_folder}/"),diploid_assignments = diploid_assignments,in_folder = in_folder)
+  #in_folder = in_folder 
+  diploid_annotation(in_seurat = glue("{out_folder}/"),diploid_assignments = diploid_assignments, out_folder=out_folder)
 }

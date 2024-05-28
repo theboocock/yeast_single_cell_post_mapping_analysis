@@ -14,5 +14,5 @@ ap_df$barcode.features$accuracy = accuracy
 
 ap_df$barcode.features %>% ggplot(aes(y=accuracy * 100,x=(nUMI))) + geom_point() +  scale_x_log10() + xlab(expression('UMI count')) + ylab("Genotyping Accuracy") + theme_bw() + stat_cor(method="spearman",size=12,cor.coef.name = "rho") +
   theme(text=element_text(size=24)) + ylim(c(50,100)) + geom_hline(yintercept = median(ap_df$barcode.features$accuracy*100),color="red")
-ggsave("fig_final/s5.png",width=16,height = 12,dpi=300)
-ggsave("fig_final/svg/s5.svg",width=16,height = 12)
+ggsave("fig_final/s7.png",width=16,height = 12,dpi=300)
+ggsave("fig_final/svg/s7.svg",width=16,height = 12)

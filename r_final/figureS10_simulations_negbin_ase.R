@@ -27,5 +27,5 @@ p4 = neg_bin_sims$sim2 %>% ggplot(aes(x=fc,y=delta.mean, group=factor(-theta2), 
 #neg_bin_sims$sim2$mu
 
 plot_grid(p1,p2,p3,p4,nrow=2,labels = "AUTO",label_size = 16)
-ggsave("fig_final/s8.png",width=16,height=12,dpi=300,device = png)
-ggsave("fig_final//svg/s8.svg",width=16,height=12,device = png)
+ggsave("fig_final/s10.png",width=16,height=12,dpi=300,device = png)
+ggsave("fig_final//svg/s10.svg",width=16,height=12,device = png)

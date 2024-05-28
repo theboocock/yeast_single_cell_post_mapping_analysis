@@ -7,5 +7,5 @@ pcompare = ap_cis$hmmGenoCis %>% mutate(single_cell_sig = p_adj < 0.05) %>%
   scale_color_brewer(name="HMM FDR",labels=c(">= 0.05","< 0.05"),palette ="Dark2") + # + 
   guides(color = guide_legend(override.aes = list(size = 8)))
 pcompare
-ggsave("fig_final/s6.png",dpi=300,height = 12,width=16)
-ggsave("fig_final/svg//s6.svg",height = 12,width=16)
+ggsave("fig_final/s8.png",dpi=300,height = 12,width=16)
+ggsave("fig_final/svg//s8.svg",height = 12,width=16)
