@@ -4,6 +4,7 @@
 sequencing data for each single-cell experiment is available on the SRA [PRJNA1049497](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1049497).
 
 see [load_all_data.R](load_all_data.R) for the main post analysis script that generates the figures and tables, and performs the trans-eQTL hotspot analysis.
+To run these scripts one needs to first download the dryad folder and extract it into the data directory. 
 
 -----
 
