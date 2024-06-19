@@ -37,6 +37,7 @@ load_cis_one_pot= function(cross){
   chrom_pos = names(colMeans(segdata$Gsub))
   df_af = data.frame(chrom_pos=chrom_pos,means=colMeans(segdata$Gsub))
   #Chromosome III 198671..201177
+ # print("GOT HER")
   #colM(segdata$Gsub)
   cross_data_l[["segData"]] = segdata 
   df_af = df_af %>% mutate(ss=str_split(chrom_pos,"_"))
@@ -75,16 +76,23 @@ load_cis_one_pot= function(cross){
   j = 1
   ase=list()
   for(in_folder_ase in sc_eqtl_row$folder){
-    print(in_folder_ase)
-    new_ase_folder = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/diploid_flip/"
+    #print("HERE")
+    #print(combined_dir)
+    new_ase_folder = glue("{root_dir}/diploid_flip/")
     
-    old_ase_folder = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/"
+    #new_ase_folder = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/diploid_flip/"
+    old_ase_folder = glue("{root_dir}/") 
+    #old_ase_folder = "/media/theboocock/Data/Dropbox/PHDTHESIS/projects/single_cell_2021/rproj/out/"
+    #print(in_folder_ase)
     
     b_f = basename(in_folder_ase)
+    
+    
+    
     in_folder_ase = glue("{new_ase_folder}{b_f}")
     #in_folder_cc = readRDS(glue("../rproj/out/cell_cycle/{b_f}"))
-    cc_in = readRDS(glue("../rproj/out/cell_cycle/{b_f}/{cross}/cell_cycle_final.RDS"))
-    seurat_in = readRDS(glue("../rproj/out/cell_cycle/{b_f}/{cross}/all.RDS"))
+    cc_in = readRDS(glue("data/out/cell_cycle/{b_f}/{cross}/cell_cycle_final.RDS"))
+    seurat_in = readRDS(glue("data//out/cell_cycle/{b_f}/{cross}/all.RDS"))
     type=sc_eqtl_row$type[j]  
     in_rds = readRDS(glue("{in_folder_ase}/bbin_{cross}.RDS"))
     #bbin_A_CCmanual.RDS
@@ -102,7 +110,7 @@ load_cis_one_pot= function(cross){
     #in_cc_int %>% mutate()
     old_ase_folder= glue("{old_ase_folder}{b_f}") 
     
-    list.files(old_ase_folder)
+    #list.files(old_ase_folder)
     ase_noise_nbin1 = readRDS(glue("{old_ase_folder}/nbin1_{cross}.RDS"))
     
     ase_noise= readRDS(glue("{in_folder_ase}/{cross}-all_models.RDS"))

@@ -1,3 +1,4 @@
+tmp/wasteland/*
 *txt
 *xlsx
 data/*
@@ -15,3 +16,5 @@ tables/*
 fig_final/*
 .fr-VindKl/*
 !out/fine_mapping/README.md
+.fr-hy2MYk/*
+

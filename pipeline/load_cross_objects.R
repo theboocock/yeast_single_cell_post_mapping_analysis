@@ -5,6 +5,7 @@ source("pipeline/annotation_utils.R")
 source("pipeline/plot_fx.R")
 cc_dir = normalizePath("data//out/cell_cycle/")
 combined_dir = normalizePath("data//out/combined/")
+root_dir = normalizePath(("data/out/"))
 
 summary_table = read_tsv("tables/s4.csv")
 dir.create("figure_drafts")

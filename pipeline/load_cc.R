@@ -59,5 +59,5 @@ haploid_genes$name[idxs][3] = "AFB1"
 haploid_genes$name[idxs][4] = "MATALPHA2"
 haploid_genes[which(!haploid_genes$name %in% genes_name_trans$gene_name),]
 haploid_genes_df = haploid_genes %>% inner_join(genes_name_trans,by=c("name"="gene_name"))
-#scer_hsg_genes = paste0("SCER-",haploid_genes$name)
+scer_hsg_genes = paste0("SCER-",haploid_genes$name)
 scer_hsg_genes_cell_cycle = scer_hsg_genes[scer_hsg_genes %in% cell_cycle_big_df$NAME2]

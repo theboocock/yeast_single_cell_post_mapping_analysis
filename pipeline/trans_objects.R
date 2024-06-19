@@ -29,7 +29,10 @@ process_hotspot_and_combined = function(hotspot_peaks, combined_peaks){
   
   #hotspot_peaks$Beta = x_b2$Beta
   #hotspot_peaks$SE = x_b2$SE 
-  hotspot_peaks = hotspot_peaks %>% filter(-Beta.x,-Beta.y) %>% inner_join(x_b2,by=c("chrom","transcript","peak.marker"))
+  
+  
+  
+  hotspot_peaks = hotspot_peaks %>% dplyr::select(!Beta & !SE) %>% inner_join(x_b2,by=c("chrom","transcript","peak.marker"))
   hotspot_peaks$chrom_short = str_replace_all(hotspot_peaks$chr,"chr","")
   hotspot_peaks$tchrom_short = str_replace_all(hotspot_peaks$tchr,"chr","")
   combined_peaks$chrom_short = str_replace_all(combined_peaks$chr,"chr","")

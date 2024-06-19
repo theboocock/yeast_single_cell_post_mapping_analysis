@@ -34,7 +34,7 @@ cList=list(
   '21_3004_10k_May10'='3004',
   '22_3004_20k_May10'='3004'
 )
-cc.big.table = readr::read_delim("data/out/cell_cycle_v5/cell_cycle_feb02162022.tsv",delim = "\t")
+cc.big.table = readr::read_delim("data//cell_cycle_feb02162022.tsv",delim = "\t")
 hList=list(
   '01_2444_44_1-2'=2^6.1,
   '02_2444_44-'= 2^7.5,
