@@ -1,11 +1,10 @@
 # Scripts for "Single-cell eQTL mapping in yeast reveals a tradeoff between growth and reproduction" 
 ## This repository also contains the code and data to recreate the figures, tables, performs trans-eQTL hotspot analysis, cell-cycle stage assignment, raw data processing, and additional links to generated data.
 
-Raw data folder for the post analysis scripts are located [here](https://drive.google.com/drive/folders/1SAUYxO7EhUq-FQLzrc__Lm_0dVF06oIj?usp=drive_link).
-
 sequencing data for each single-cell experiment is available on the SRA [PRJNA1049497](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1049497).
 
 see [load_all_data.R](load_all_data.R) for the main post analysis script that generates the figures and tables, and performs the trans-eQTL hotspot analysis.
+To run these scripts one needs to first download the dryad folder and extract it into the data directory. 
 
 -----
 
@@ -13,12 +12,14 @@ see [cell_cycle_annotation.R](cell_cycle_annotation/cell_cycle_annotation.R) for
 
 -----------------
 
+see [numbers_final](https://github.com/theboocock/yeast_single_cell_post_analysis/tree/main/numbers_final) for scripts that generate all the numbers found in the maintext.
+
+----
+
 see [raw_data](raw_data_processing/extract_parents_and_vatrix_hoff.sh) for the raw data processing script.
 
 see [pre_processing_repository](https://github.com/joshsbloom/single_cell_eQTL/tree/master/yeast/code) to access the code used to run the HMM and eQTL mapping analysis.
 
 ------------------
-
-see [drivelink](https://drive.google.com/drive/folders/1k9Gfg0GbuEuRVPXx5Y8WC-ZXbuWwgP5Q?usp=sharing) for the genotype and gene expression matrices, and the cell meta-data for each experiment in a simple format.
 
 see [R_dependencies](R_dependencies.yaml) for the R version and list of packages used for this analysis.
