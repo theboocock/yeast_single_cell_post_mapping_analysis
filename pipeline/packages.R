@@ -42,5 +42,8 @@ library(tidyverse)
 library(segmented)
 library(phangorn)
 library(glmnet)
+library(magick)
+library(svglite)
+library(Matrix)
 
 

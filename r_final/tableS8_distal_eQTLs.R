@@ -9,11 +9,11 @@ B = B %>% inner_join(genes_name_trans,by=c("transcript"="gene_id"))
 C = C %>% inner_join(genes_name_trans,by=c("transcript"="gene_id"))
 
 
-A_out = A %>% dplyr::select(transcript,gene_name, peak.marker, tchr,tpos, Beta.y,LOD,FDR,in.hotspot,bin,has_interaction_trans)
+A_out = A %>% dplyr::select(transcript,gene_name, peak.marker, tchr,tpos, Beta,LOD,FDR,in.hotspot,bin,has_interaction_trans)
 #A_out$LOD = 10^(-A_out$LOD)
-B_out = B %>% dplyr::select(transcript,gene_name, peak.marker, tchr,tpos, Beta.y,LOD,FDR,in.hotspot,bin,has_interaction_trans)
+B_out = B %>% dplyr::select(transcript,gene_name, peak.marker, tchr,tpos, Beta,LOD,FDR,in.hotspot,bin,has_interaction_trans)
 #B_out$LOD = 10^(-B_out$LOD)
-C_out = C %>% dplyr::select(transcript,gene_name, peak.marker, tchr,tpos, Beta.y,LOD,FDR,in.hotspot,bin,has_interaction_trans)
+C_out = C %>% dplyr::select(transcript,gene_name, peak.marker, tchr,tpos, Beta,LOD,FDR,in.hotspot,bin,has_interaction_trans)
 #C_out$LOD = 10^(-C_out$LOD)
 #col_names_out = c("transcript","gene name","closest marker","estimate (one-pot)","p-value (one-pot)","adjusted p-value (one-pot)","has cell-cycle interaction")
 

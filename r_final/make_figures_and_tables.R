@@ -1,7 +1,7 @@
 #source("pipeline/load_cross_objects.R")
 # main figures
 dir.create("fig_final/main/staging/",recursive = T)
-dir.create("fig_final/svg/",recursive = T)
+#dir.create("fig_final/svg/",recursive = T)
 source("r_final/figure1_local.R")
 source("r_final/figure2_byxrm_map.R")
 source("r_final/figure3_trans_other_crosses.R")

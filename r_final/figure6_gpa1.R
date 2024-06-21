@@ -17,6 +17,14 @@ p3 = ggtree(gfive, aes(color=group), layout="fan",open.angle = 180)  + scale_col
 rotate_tree(p3,angle= 90) #+ scale_x_reverse()
 ggsave("fig_final/main/staging/figure6_right_flipped_tree.svg",width=8,height=12)
 
+
+
+p_left = plot_grid(p_growth,p_mating,nrow=2)
+p_right = rotate_tree(p3,angle= 90)
+
+plot_grid(p_left, p_right)
+ggsave("fig_final/main/staging/figure6.png",width=16,height=12,dpi=300)
+
 #ggtree(groupOTU(aa_2@phylo,list(het_df$sample[het_df$Clades_trim == "3. Brazilian bioethanol"],het_df$sample[het_df$Clades_trim == "26. Asian fermentation"])),aes(color=group),layout="fan",open.angle = 180)
 
 

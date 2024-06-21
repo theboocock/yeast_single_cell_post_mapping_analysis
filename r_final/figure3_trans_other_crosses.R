@@ -43,7 +43,7 @@ plot_grid(pb,p3004,pb_bar,p3004_bar,nrow=2,labels = c("A","B","C","D"),label_siz
 #cowplot::plot_grid(pb,p3004,pb_bar,p3004_bar,nrow=2,labels=c("A","B","C","D"),label_size = 18,align="hv")
 
 ggsave("fig_final/main/staging/figure3.svg",width=26,height=16)#,width=26,height=16)
-
+ggsave("fig_final/main/staging/figure3.png",width=26,height=16, dpi=300)
 #2.6/2
 
 #1.3 / 2

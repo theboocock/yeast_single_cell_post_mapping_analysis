@@ -80,6 +80,7 @@ attempt_at_plot = ((p1/p2/p3) + plot_layout(guides="collect") | (p4/p5/p6)) + pl
 attempt_at_plot
 #m3= 
 ggsave("fig_final/main//staging//figure5_cell_cycle.svg",width=16,height=12)
+ggsave("fig_final/main//staging//figure5_cell_cycle.png",width=16,height=12,dpi=300)
 
 
 

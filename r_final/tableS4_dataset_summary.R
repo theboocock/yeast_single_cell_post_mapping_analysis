@@ -3,7 +3,6 @@
 ### Dataset's used for analysis #### 
 
 ###
-library(Matrix)
 ginformative_rds = readRDS("data/out/combined/ginformative.RDS")
 
 folders = list.dirs("data//out/combined/", full.names=T)
@@ -21,7 +20,6 @@ hamming <- function(X) {
   D <- (1 - X) %*% t(X)
   D + t(D)
 }
-library(glue)
 
 
 unique_cells = data.frame(cross=c('A','B','3004'),n_unique_cells=c(1987,675,0))
@@ -131,7 +129,7 @@ for(base_path in names(good.dips)){
     
     #readRDS(paste0(base_dir,"/",base_path,"/ASEData.RDS"))
     ngenes=length(unique(nbin$gene))
-    mat = ase_data$counts %>% as.dgCMatrix.spam()
+    #mat = ase_data$counts %>% as.dgCMatrix.spam()
     
     
     #expressed_snps = median(colSums((phased_counts$par1.ASEcounts[bc,] + phased_counts$par2.ASEcounts[bc,]) > 0))
