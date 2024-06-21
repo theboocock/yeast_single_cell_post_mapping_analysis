@@ -7,7 +7,7 @@ platform:
   collate: en_US.UTF-8
   ctype: en_US.UTF-8
   tz: America/Los_Angeles
-  date: '2024-05-27'
+  date: '2024-06-21'
   rstudio: 2024.04.0+735 Chocolate Cosmos (desktop)
   pandoc: NA
 packages:
@@ -17,7 +17,6 @@ packages:
   - AnnotationDbi
   - ape
   - aplot
-  - askpass
   - backports
   - Biobase
   - BiocGenerics
@@ -67,7 +66,6 @@ packages:
   - fs
   - future
   - future.apply
-  - gargle
   - gdsfmt
   - generics
   - GenomeInfoDb
@@ -89,7 +87,6 @@ packages:
   - glue
   - GO.db
   - goftest
-  - googledrive
   - GOSemSim
   - graph
   - graphite
@@ -121,6 +118,7 @@ packages:
   - listenv
   - lmtest
   - lubridate
+  - magick
   - magrittr
   - MASS
   - Matrix
@@ -134,7 +132,6 @@ packages:
   - munsell
   - mvtnorm
   - nlme
-  - openssl
   - openxlsx
   - org.Sc.sgd.db
   - parallelly
@@ -158,6 +155,7 @@ packages:
   - quadprog
   - qvalue
   - R6
+  - ragg
   - RANN
   - rappdirs
   - RColorBrewer
@@ -213,7 +211,10 @@ packages:
   - stringr
   - SummarizedExperiment
   - survival
+  - svglite
+  - systemfonts
   - tensor
+  - textshaping
   - tibble
   - tidygraph
   - tidyr
@@ -251,7 +252,6 @@ packages:
   - 1.66.0
   - '5.8'
   - 0.2.2
-  - 1.2.0
   - 1.4.1
   - 2.64.0
   - 0.50.0
@@ -301,7 +301,6 @@ packages:
   - 1.6.4
   - 1.33.2
   - 1.11.2
-  - 1.5.2
   - 1.40.0
   - 0.1.3
   - 1.40.0
@@ -323,7 +322,6 @@ packages:
   - 1.7.0
   - 3.19.1
   - 1.2.3
-  - 2.1.1
   - 2.30.0
   - 1.82.0
   - 1.50.0
@@ -355,6 +353,7 @@ packages:
   - 0.9.1
   - 0.9.40
   - 1.9.3
+  - 2.8.3
   - 2.0.3
   - 7.3.60
   - 1.6.5
@@ -368,7 +367,6 @@ packages:
   - 0.5.1
   - 1.2.4
   - 3.1.163
-  - 2.1.2
   - 4.2.5.2
   - 3.19.1
   - 1.37.1
@@ -392,6 +390,7 @@ packages:
   - 1.5.8
   - 2.36.0
   - 2.5.1
+  - 1.3.0
   - 2.6.1
   - 0.3.3
   - 1.1.3
@@ -447,7 +446,10 @@ packages:
   - 1.5.1
   - 1.34.0
   - 3.5.8
+  - 2.1.3
+  - 1.0.6
   - '1.5'
+  - 0.3.7
   - 3.2.1
   - 1.3.1
   - 1.3.1
@@ -485,7 +487,6 @@ packages:
   - 1.66.0
   - '5.8'
   - 0.2.2
-  - 1.2.0
   - 1.4.1
   - 2.64.0
   - 0.50.0
@@ -535,7 +536,6 @@ packages:
   - 1.6.4
   - 1.33.2
   - 1.11.2
-  - 1.5.2
   - 1.40.0
   - 0.1.3
   - 1.40.0
@@ -557,7 +557,6 @@ packages:
   - 1.7.0
   - 3.19.1
   - 1.2-3
-  - 2.1.1
   - 2.30.0
   - 1.82.0
   - 1.50.0
@@ -589,6 +588,7 @@ packages:
   - 0.9.1
   - 0.9-40
   - 1.9.3
+  - 2.8.3
   - 2.0.3
   - 7.3-60
   - 1.6-5
@@ -602,7 +602,6 @@ packages:
   - 0.5.1
   - 1.2-4
   - 3.1-163
-  - 2.1.2
   - 4.2.5.2
   - 3.19.1
   - 1.37.1
@@ -626,6 +625,7 @@ packages:
   - 1.5-8
   - 2.36.0
   - 2.5.1
+  - 1.3.0
   - 2.6.1
   - 0.3.3
   - 1.1-3
@@ -681,7 +681,10 @@ packages:
   - 1.5.1
   - 1.34.0
   - 3.5-8
+  - 2.1.3
+  - 1.0.6
   - '1.5'
+  - 0.3.7
   - 3.2.1
   - 1.3.1
   - 1.3.1
@@ -719,7 +722,6 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/AnnotationDbi
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/ape
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/aplot
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/askpass
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/backports
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/Biobase
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/BiocGenerics
@@ -769,7 +771,6 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/fs
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/future
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/future.apply
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/gargle
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/gdsfmt
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/generics
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/GenomeInfoDb
@@ -791,7 +792,6 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/glue
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/GO.db
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/goftest
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/googledrive
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/GOSemSim
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/graph
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/graphite
@@ -823,6 +823,7 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/listenv
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/lmtest
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/lubridate
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/magick
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/magrittr
   - /usr/lib/R/library/MASS
   - /usr/lib/R/library/Matrix
@@ -836,7 +837,6 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/munsell
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/mvtnorm
   - /usr/lib/R/library/nlme
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/openssl
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/openxlsx
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/org.Sc.sgd.db
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/parallelly
@@ -860,6 +860,7 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/quadprog
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/qvalue
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/R6
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/ragg
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/RANN
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/rappdirs
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/RColorBrewer
@@ -915,7 +916,10 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/stringr
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/SummarizedExperiment
   - /usr/lib/R/library/survival
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/svglite
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/systemfonts
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/tensor
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/textshaping
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/tibble
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/tidygraph
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/tidyr
@@ -953,7 +957,6 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/AnnotationDbi
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/ape
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/aplot
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/askpass
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/backports
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/Biobase
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/BiocGenerics
@@ -1003,7 +1006,6 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/fs
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/future
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/future.apply
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/gargle
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/gdsfmt
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/generics
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/GenomeInfoDb
@@ -1025,7 +1027,6 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/glue
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/GO.db
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/goftest
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/googledrive
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/GOSemSim
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/graph
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/graphite
@@ -1057,6 +1058,7 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/listenv
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/lmtest
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/lubridate
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/magick
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/magrittr
   - /usr/lib/R/library/MASS
   - /usr/lib/R/library/Matrix
@@ -1070,7 +1072,6 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/munsell
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/mvtnorm
   - /usr/lib/R/library/nlme
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/openssl
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/openxlsx
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/org.Sc.sgd.db
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/parallelly
@@ -1094,6 +1095,7 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/quadprog
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/qvalue
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/R6
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/ragg
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/RANN
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/rappdirs
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/RColorBrewer
@@ -1149,7 +1151,10 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/stringr
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/SummarizedExperiment
   - /usr/lib/R/library/survival
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/svglite
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/systemfonts
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/tensor
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/textshaping
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/tibble
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/tidygraph
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4/tidyr
@@ -1188,7 +1193,6 @@ packages:
   - yes
   - no
   - no
-  - no
   - yes
   - yes
   - yes
@@ -1237,7 +1241,6 @@ packages:
   - no
   - no
   - no
-  - no
   - yes
   - no
   - yes
@@ -1253,13 +1256,12 @@ packages:
   - yes
   - no
   - no
-  - no
-  - yes
-  - no
   - yes
   - yes
   - no
   - yes
+  - yes
+  - no
   - no
   - yes
   - no
@@ -1294,6 +1296,7 @@ packages:
   - yes
   - yes
   - yes
+  - yes
   - no
   - no
   - no
@@ -1304,7 +1307,6 @@ packages:
   - no
   - no
   - yes
-  - no
   - yes
   - yes
   - no
@@ -1325,6 +1327,7 @@ packages:
   - no
   - no
   - yes
+  - no
   - no
   - no
   - no
@@ -1383,6 +1386,9 @@ packages:
   - yes
   - no
   - no
+  - yes
+  - no
+  - no
   - no
   - yes
   - no
@@ -1392,7 +1398,7 @@ packages:
   - yes
   - no
   - yes
-  - no
+  - yes
   - no
   - no
   - no
@@ -1649,13 +1655,13 @@ packages:
   - no
   - no
   - no
+  - no
   date:
   - '2016-07-21'
   - '2023-02-06'
   - '2024-05-01'
   - '2024-04-11'
   - '2023-10-06'
-  - '2023-09-03'
   - '2021-12-13'
   - '2024-04-30'
   - '2024-04-30'
@@ -1705,7 +1711,6 @@ packages:
   - '2024-04-25'
   - '2024-03-26'
   - '2024-03-28'
-  - '2023-07-20'
   - '2024-04-30'
   - '2022-07-05'
   - '2024-04-30'
@@ -1727,7 +1732,6 @@ packages:
   - '2024-01-09'
   - '2024-05-06'
   - '2021-10-07'
-  - '2023-06-11'
   - '2024-04-30'
   - '2024-04-30'
   - '2024-04-30'
@@ -1759,6 +1763,7 @@ packages:
   - '2024-01-29'
   - '2022-03-21'
   - '2023-09-27'
+  - '2024-02-18'
   - '2022-03-30'
   - '2023-05-04'
   - '2024-01-11'
@@ -1772,7 +1777,6 @@ packages:
   - '2024-04-01'
   - '2023-11-27'
   - '2023-08-09'
-  - '2024-04-21'
   - '2023-02-06'
   - '2024-05-06'
   - '2024-02-29'
@@ -1796,6 +1800,7 @@ packages:
   - '2019-11-20'
   - '2024-04-30'
   - '2021-08-19'
+  - '2024-03-13'
   - '2019-01-08'
   - '2021-01-31'
   - '2022-04-03'
@@ -1851,7 +1856,10 @@ packages:
   - '2023-11-14'
   - '2024-05-01'
   - '2024-02-14'
+  - '2023-12-08'
+  - '2024-03-07'
   - '2012-05-05'
+  - '2023-10-09'
   - '2023-03-20'
   - '2024-01-30'
   - '2024-01-24'
@@ -1887,7 +1895,6 @@ packages:
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - Bioconductor 3.19 (R 4.4.0)
-  - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
@@ -1939,7 +1946,6 @@ packages:
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
-  - CRAN (R 4.4.0)
   - Bioconductor 3.19 (R 4.4.0)
   - CRAN (R 4.4.0)
   - Bioconductor 3.19 (R 4.4.0)
@@ -1960,7 +1966,6 @@ packages:
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - Bioconductor
-  - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - Bioconductor 3.19 (R 4.4.0)
   - Bioconductor 3.19 (R 4.4.0)
@@ -1987,6 +1992,7 @@ packages:
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - CRAN (R 4.3.1)
+  - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
@@ -2007,7 +2013,6 @@ packages:
   - CRAN (R 4.4.0)
   - CRAN (R 4.3.1)
   - CRAN (R 4.4.0)
-  - CRAN (R 4.4.0)
   - Bioconductor
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
@@ -2029,6 +2034,7 @@ packages:
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - Bioconductor 3.19 (R 4.4.0)
+  - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
@@ -2085,6 +2091,9 @@ packages:
   - CRAN (R 4.4.0)
   - Bioconductor 3.19 (R 4.4.0)
   - CRAN (R 4.3.3)
+  - CRAN (R 4.4.0)
+  - CRAN (R 4.4.0)
+  - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
   - CRAN (R 4.4.0)
@@ -2351,6 +2360,7 @@ packages:
   - .na
   - .na
   - .na
+  - .na
   library:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
@@ -2374,12 +2384,9 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /usr/lib/R/library
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /usr/lib/R/library
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
-  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
@@ -2455,6 +2462,7 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /usr/lib/R/library
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
@@ -2553,6 +2561,9 @@ packages:
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /usr/lib/R/library
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
+  - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
   - /home/theboocock/R/x86_64-pc-linux-gnu-library/4.4
