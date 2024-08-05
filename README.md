@@ -5,10 +5,9 @@ Sequencing data for each single-cell experiment is available on the SRA [PRJNA10
 
 see [load_all_data.R](load_all_data.R) for the main post analysis script that generates the figures and tables, and performs the trans-eQTL hotspot analysis.
 
-To run these scripts one needs to first download the processed data from Dryad and extract it into the data directory. the archive on dryad was created by splitting a large archive to recreate the original archive simply concatenate them together using the command `cat additional_data.tar.p* > additional_data.tar.gz`. The data can be downloaded [here](https://datadryad.org/stash/share/vHoXP5Ph78EPD3C2yGvnuV4F1DukxYyS9dUqa75_Wkg). 
+To run these scripts one needs to first download the processed data from Zenodo and extract it into the data directory. The data can be downloaded [here](https://zenodo.org/records/12695128). 
 
-A detailed description of the structure of the files in the archive can be found at the Dryad link. 
-
+see [README_DATA.md](README_DATA.md) for a detailed description of the structure of the files in the archive.
  
 -----
 
