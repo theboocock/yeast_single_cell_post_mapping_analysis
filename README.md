@@ -7,7 +7,7 @@ see [load_all_data.R](load_all_data.R) for the main post analysis script that ge
 
 To run these scripts one needs to first download the processed data from Zenodo and extract it into the data directory. The data can be downloaded [here](https://zenodo.org/records/12695128). 
 
-see [README_DATA.md](README_DATA.md) for a detailed description of the structure of the files in the archive.
+see [README_DATA.md](README_DATA.md) for a detailed description of the organization and sheets contained within the hotspot annotation tarball File S1. 
  
 -----
 
